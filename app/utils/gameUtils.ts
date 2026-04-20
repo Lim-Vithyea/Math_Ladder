@@ -17,10 +17,10 @@ function rand(min: number, max: number) {
 
 /** Generates a kid-friendly math question */
 export function generateQuestion(difficulty: Difficulty = 'easy'): Question {
-  const ops = difficulty === 'hard' ? ['+', '-', 'x', '÷']
-            : difficulty === 'medium' ? ['+', '-', 'x']
-            : ['+', '-'];
-  
+  const ops = difficulty === 'hard' ? ['x', '÷']
+    : difficulty === 'medium' ? ['-', 'x']
+      : ['+', '-'];
+
   const op = ops[Math.floor(Math.random() * ops.length)];
 
   let a: number, b: number, answer: number;
