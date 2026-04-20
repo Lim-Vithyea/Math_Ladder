@@ -154,10 +154,10 @@ export default function GamePage() {
             <p className="text-gray-400 text-sm mt-1 font-semibold">{t.hint}</p>
           </header>
 
-          <main className="flex flex-col xl:flex-row items-center xl:items-start justify-center gap-8 xl:gap-16 px-4 pb-10 flex-1 w-full max-w-7xl mx-auto">
+          <main className="flex flex-col landscape:flex-row md:flex-row items-center md:items-start justify-center gap-6 md:gap-12 px-2 pb-4 flex-1 w-full max-w-[1400px] mx-auto">
 
-            {/* Central ladder (Mobile: Top, Desktop: Middle) */}
-            <div className="order-1 xl:order-2 shrink-0 transform scale-90 sm:scale-100 origin-top">
+            {/* Central ladder (Mobile Portrait: Top, Landscape/Desktop: Middle) */}
+            <div className="order-1 landscape:order-2 md:order-2 shrink-0 transform scale-75 landscape:scale-[0.6] md:scale-100 lg:scale-[1] origin-top md:origin-center">
               <LadderScene
                 redScore={red.score}
                 blueScore={blue.score}
@@ -165,8 +165,8 @@ export default function GamePage() {
               />
             </div>
 
-            {/* Red team (Mobile: Middle, Desktop: Left) */}
-            <div className="order-2 xl:order-1 w-full max-w-[500px]">
+            {/* Red team (Mobile Portrait: Middle, Landscape/Desktop: Left) */}
+            <div className="order-2 landscape:order-1 md:order-1 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px]">
               <TeamCalculator
                 team="red"
                 teamName={t.foxTeam}
@@ -184,8 +184,8 @@ export default function GamePage() {
               />
             </div>
 
-            {/* Blue team (Mobile: Bottom, Desktop: Right) */}
-            <div className="order-3 xl:order-3 w-full max-w-[500px]">
+            {/* Blue team (Mobile Portrait: Bottom, Landscape/Desktop: Right) */}
+            <div className="order-3 landscape:order-3 md:order-3 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px]">
               <TeamCalculator
                 team="blue"
                 teamName={t.penguinTeam}
