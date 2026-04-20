@@ -12,7 +12,7 @@ import { TRANSLATIONS, type Lang } from '../i18n/translations';
 
 const { Title, Text } = Typography;
 
-const TOTAL_STEPS = 10;
+const TOTAL_STEPS = 15;
 
 type Team = 'red' | 'blue';
 type GameMode = 'calculator' | 'choices';
@@ -128,7 +128,7 @@ export default function LadderRaceGame({ lang, t }: { lang: Lang, t: any }) {
         open={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
         lang={lang}
-        setLang={() => {}}
+        setLang={() => { }}
         difficulty={difficulty}
         setDifficulty={handleDifficultyChange}
         gameMode={gameMode}

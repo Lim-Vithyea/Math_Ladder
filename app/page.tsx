@@ -1,261 +1,116 @@
 'use client';
 
-/**
- * page.tsx — Math Ladder Race 🧮
- *
- * Game Rules:
- *   - Red team (🦊 Fox) vs Blue team (🐧 Penguin)
- *   - Each team gets a math question on their own calculator
- *   - Submit the correct answer → character climbs 1 step up the ladder
- *   - First team to reach step 10 wins!
- *
- * State is kept here; child components are purely presentational.
- */
-
-import React, { useState, useCallback } from 'react';
-import { ConfigProvider, App, Button, Dropdown } from 'antd';
-
-import TeamCalculator from './components/TeamCalculator';
-import LadderScene from './components/LadderScene';
-import WinnerModal from './components/WinnerModal';
+import React from 'react';
+import Link from 'next/link';
+import { ConfigProvider, App, Button, Typography, Card, Row, Col } from 'antd';
 import MathParticles from './components/MathParticles';
-import GameSidebar from './components/GameSidebar';
-import { generateQuestion, type Question, type Difficulty, type QuestionType } from './utils/gameUtils';
-import { TRANSLATIONS, type Lang } from './i18n/translations';
+import { useSettings } from './context/SettingsContext';
 
-// ── Constants ─────────────────────────────────────────────────────
-const TOTAL_STEPS = 10; // steps to reach the top
+const { Title, Text } = Typography;
 
-// ── Types ─────────────────────────────────────────────────────────
-type Team = 'red' | 'blue';
-type GameMode = 'calculator' | 'choices';
+export default function LandingPage() {
+  const { lang, setLang, t } = useSettings();
 
-interface TeamState {
-  score: number;                      // 0 – TOTAL_STEPS
-  question: Question;                    // active math problem
-  input: string;                      // digits typed so far
-  feedback: 'correct' | 'wrong' | null; // feedback after submit
-}
-
-// ── Helpers ───────────────────────────────────────────────────────
-function freshTeam(diff: Difficulty, mode: GameMode, type: QuestionType): TeamState {
-  return { score: 0, question: generateQuestion(diff, mode === 'choices', type), input: '', feedback: null };
-}
-
-// ── Component ─────────────────────────────────────────────────────
-export default function GamePage() {
-  const [difficulty, setDifficulty] = useState<Difficulty>('easy');
-  const [gameMode, setGameMode] = useState<GameMode>('calculator');
-  const [exerciseType, setExerciseType] = useState<QuestionType>('mixed');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const [red, setRed] = useState<TeamState>(() => freshTeam('easy', 'calculator', 'mixed'));
-  const [blue, setBlue] = useState<TeamState>(() => freshTeam('easy', 'calculator', 'mixed'));
-  const [winner, setWinner] = useState<Team | null>(null);
-
-  // ── Language toggle ────────────────────────────────────────────
-  const [lang, setLang] = useState<Lang>('en');
-  const t = TRANSLATIONS[lang]; // shorthand for current translations
-
-  // ── Difficulty Handler ─────────────────────────────────────────
-  const handleDifficultyChange = (val: Difficulty) => {
-    setDifficulty(val);
-    setRed(freshTeam(val, gameMode, exerciseType));
-    setBlue(freshTeam(val, gameMode, exerciseType));
-    setWinner(null);
+  const toggleLang = () => {
+    setLang(lang === 'en' ? 'km' : 'en');
   };
 
-  // ── Mode Handler ───────────────────────────────────────────────
-  const handleModeChange = (val: GameMode) => {
-    setGameMode(val);
-    setRed(freshTeam(difficulty, val, exerciseType));
-    setBlue(freshTeam(difficulty, val, exerciseType));
-    setWinner(null);
-  };
-
-  // ── Exercise Type Handler ──────────────────────────────────────
-  const handleExerciseTypeChange = (val: QuestionType) => {
-    setExerciseType(val);
-    setRed(freshTeam(difficulty, gameMode, val));
-    setBlue(freshTeam(difficulty, gameMode, val));
-    setWinner(null);
-  };
-
-  // Shorthand: pick the right setter
-  const setter = (team: Team) => team === 'red' ? setRed : setBlue;
-
-  // ── Digit pressed ──────────────────────────────────────────────
-  const handleDigit = useCallback((team: Team, digit: string) => {
-    if (winner) return;
-    setter(team)(s => ({
-      ...s,
-      input: s.input.length < 3 ? s.input + digit : s.input,
-    }));
-  }, [winner]);
-
-  // ── Backspace pressed ──────────────────────────────────────────
-  const handleBackspace = useCallback((team: Team) => {
-    if (winner) return;
-    setter(team)(s => ({ ...s, input: s.input.slice(0, -1) }));
-  }, [winner]);
-
-  // ── Submit answer ──────────────────────────────────────────────
-  const handleSubmit = useCallback((team: Team, choice?: number) => {
-    if (winner) return;
-
-    setter(team)(s => {
-      const userAnswer = choice !== undefined ? choice : parseInt(s.input, 10);
-      const correct = !isNaN(userAnswer) && userAnswer === s.question.answer;
-
-      if (correct) {
-        const newScore = s.score + 1;
-        const won = newScore >= TOTAL_STEPS;
-        if (won) setWinner(team);
-        return {
-          ...s,
-          score: newScore,
-          question: won ? s.question : generateQuestion(difficulty, gameMode === 'choices', exerciseType),
-          input: '',
-          feedback: 'correct',
-        };
-      } else {
-        // Decrease score by 1 if wrong, but don't go below 0
-        const newScore = Math.max(0, s.score - 1);
-        return { ...s, score: newScore, input: '', feedback: 'wrong' };
-      }
-    });
-
-    // Clear feedback after 700ms
-    setTimeout(() => {
-      setter(team)(s => ({ ...s, feedback: null }));
-    }, 700);
-  }, [winner, difficulty, gameMode, exerciseType]);
-
-  // ── Reset game ─────────────────────────────────────────────────
-  const handleReset = useCallback(() => {
-    setRed(freshTeam(difficulty, gameMode, exerciseType));
-    setBlue(freshTeam(difficulty, gameMode, exerciseType));
-    setWinner(null);
-  }, [difficulty, gameMode, exerciseType]);
-
-  // ── Render ─────────────────────────────────────────────────────
   return (
     <ConfigProvider theme={{ token: { fontFamily: 'inherit' } }}>
       <App>
         <MathParticles />
-        <div
-          className="min-h-screen flex flex-col relative bg-transparent"
-          style={{ zIndex: 1 }}
-        >
-          <header className="text-center py-8 px-4 relative">
-            <div className="absolute top-4 right-4 flex gap-2 z-50">
-              <Button
-                type="primary"
-                size="large"
-                icon={<span>⚙️</span>}
-                onClick={() => setIsSidebarOpen(true)}
-                className="shadow-lg transition-transform hover:scale-110 active:scale-95 flex items-center gap-2"
-                style={{
-                  fontWeight: 800,
-                  borderRadius: 16,
-                  height: 50,
-                  backgroundColor: '#7e22ce',
-                  borderColor: '#6b21a8',
-                  borderWidth: 2,
-                }}
-              >
-                {t.settings}
-              </Button>
-            </div>
+        <div className="min-h-screen flex flex-col items-center justify-center p-4 relative z-10 overflow-hidden bg-slate-50">
+          
+          {/* Language Toggle */}
+          <div className="absolute top-6 right-6 z-20">
+            <Button 
+              size="large"
+              onClick={toggleLang}
+              className="font-bold rounded-xl shadow-md border-2 border-violet-200 hover:border-violet-400 transition-all bg-white"
+            >
+              {lang === 'en' ? '🇰🇭 ភាសាខ្មែរ' : '🇺🇸 English'}
+            </Button>
+          </div>
 
-            <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent inline-block select-none py-2 leading-normal">
-              {t.title}
-            </h1>
-            <p className="text-gray-600 font-bold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent select-none py-2 leading-normal text-base lg:text-lg">
-              {t.subtitle}
-            </p>
-            <p className="text-gray-400 text-sm mt-1 font-semibold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent select-none py-2 leading-normal">{t.hint}</p>
+          <header className="text-center mb-12">
+            <Title className="text-5xl md:text-7xl font-black bg-gradient-to-r from-violet-600 via-fuchsia-500 to-orange-500 bg-clip-text text-transparent mb-4 leading-tight">
+              {t.menuTitle}
+            </Title>
+            <Text className="text-lg md:text-2xl text-gray-600 font-bold max-w-2xl block mx-auto px-4 leading-relaxed">
+              {t.menuSubtitle}
+            </Text>
           </header>
 
-          <GameSidebar
-            open={isSidebarOpen}
-            onClose={() => setIsSidebarOpen(false)}
-            lang={lang}
-            setLang={setLang}
-            difficulty={difficulty}
-            setDifficulty={handleDifficultyChange}
-            gameMode={gameMode}
-            setGameMode={handleModeChange}
-            exerciseType={exerciseType}
-            setExerciseType={handleExerciseTypeChange}
-            onReset={handleReset}
-            t={t}
-          />
+          <main className="w-full max-w-5xl">
+            <Row gutter={[32, 32]} justify="center">
+              
+              {/* Ladder Race Card */}
+              <Col xs={24} md={12}>
+                <Link href="/ladder-race">
+                  <Card 
+                    hoverable 
+                    className="h-full rounded-3xl border-4 border-violet-100 shadow-xl overflow-hidden group transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-violet-400"
+                    styles={{ body: { padding: '40px 32px' } }}
+                  >
+                    <div className="flex flex-col items-center text-center">
+                      <div className="text-7xl mb-6 transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
+                        🪜
+                      </div>
+                      <Title level={2} className="text-3xl font-black text-violet-700 mb-4">
+                        {t.ladderGame}
+                      </Title>
+                      <Text className="text-lg text-gray-500 font-semibold mb-8 h-12">
+                        {t.ladderDesc}
+                      </Text>
+                      <Button 
+                        type="primary" 
+                        size="large" 
+                        className="h-14 px-10 rounded-2xl text-xl font-black bg-violet-600 border-none shadow-lg group-hover:bg-violet-700 transition-colors"
+                      >
+                        {t.start}
+                      </Button>
+                    </div>
+                  </Card>
+                </Link>
+              </Col>
 
-          <main className="flex flex-col landscape:flex-row md:flex-row items-center md:items-start justify-center gap-6 md:gap-9 px-2 flex-1 w-full max-w-[1400px] mx-auto">
+              {/* Speed Challenge Card */}
+              <Col xs={24} md={12}>
+                <Link href="/speed-challenge">
+                  <Card 
+                    hoverable 
+                    className="h-full rounded-3xl border-4 border-orange-100 shadow-xl overflow-hidden group transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-orange-400"
+                    styles={{ body: { padding: '40px 32px' } }}
+                  >
+                    <div className="flex flex-col items-center text-center">
+                      <div className="text-7xl mb-6 transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-300">
+                        ⏱️
+                      </div>
+                      <Title level={2} className="text-3xl font-black text-orange-600 mb-4">
+                        {t.speedGame}
+                      </Title>
+                      <Text className="text-lg text-gray-500 font-semibold mb-8 h-12">
+                        {t.speedDesc}
+                      </Text>
+                      <Button 
+                        type="primary" 
+                        size="large" 
+                        className="h-14 px-10 rounded-2xl text-xl font-black bg-orange-500 border-none shadow-lg group-hover:bg-orange-600 transition-colors"
+                      >
+                        {t.start}
+                      </Button>
+                    </div>
+                  </Card>
+                </Link>
+              </Col>
 
-            {/* Central ladder (Mobile Portrait: Top, Landscape/Desktop: Middle) */}
-            <div className="order-1 landscape:order-2 md:order-2 shrink-0 transform scale-75 landscape:scale-[0.8] md:scale-100 lg:scale-[1] origin-top">
-              <LadderScene
-                redScore={red.score}
-                blueScore={blue.score}
-                totalSteps={TOTAL_STEPS}
-              />
-            </div>
-
-            {/* Red team (Mobile Portrait: Middle, Landscape/Desktop: Left) */}
-            <div className="order-2 landscape:order-1 md:order-1 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px] flex justify-center">
-              <TeamCalculator
-                team="red"
-                teamName={t.foxTeam}
-                emoji="🦊"
-                score={red.score}
-                totalSteps={TOTAL_STEPS}
-                question={red.question}
-                input={red.input}
-                feedback={red.feedback}
-                disabled={!!winner}
-                gameMode={gameMode}
-                t={t}
-                onDigit={(d) => handleDigit('red', d)}
-                onBackspace={() => handleBackspace('red')}
-                onSubmit={(choice) => handleSubmit('red', choice)}
-              />
-            </div>
-
-            {/* Blue team (Mobile Portrait: Bottom, Landscape/Desktop: Right) */}
-            <div className="order-3 landscape:order-3 md:order-3 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px] flex justify-center">
-              <TeamCalculator
-                team="blue"
-                teamName={t.penguinTeam}
-                emoji="🐧"
-                score={blue.score}
-                totalSteps={TOTAL_STEPS}
-                question={blue.question}
-                input={blue.input}
-                feedback={blue.feedback}
-                disabled={!!winner}
-                gameMode={gameMode}
-                t={t}
-                onDigit={(d) => handleDigit('blue', d)}
-                onBackspace={() => handleBackspace('blue')}
-                onSubmit={(choice) => handleSubmit('blue', choice)}
-              />
-            </div>
-
-
+            </Row>
           </main>
-        </div>
 
-        {/* Winner overlay */}
-        {winner && (
-          <WinnerModal
-            winner={winner}
-            winnerName={winner === 'red' ? t.foxTeam : t.penguinTeam}
-            t={t}
-            onReset={handleReset}
-          />
-        )}
+          <footer className="mt-16 text-gray-400 font-bold select-none opacity-50">
+            © 2024 Math Adventure Games • Practice & Fun
+          </footer>
+        </div>
       </App>
     </ConfigProvider>
   );
