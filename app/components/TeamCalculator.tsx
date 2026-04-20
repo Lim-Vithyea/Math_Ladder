@@ -94,15 +94,16 @@ export default function TeamCalculator({
       <div className={`${theme.body} p-4 space-y-3`}>
 
         {/* Question + answer display */}
-        <div className={`rounded-2xl p-3 text-center transition-all duration-200 ${feedbackRing}`}>
+        <div className={`rounded-2xl p-1 text-center transition-all duration-200 ${feedbackRing}`}>
           <p className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-1">
             {t.solveIt}
           </p>
-          <p className={`text-2xl font-black ${theme.text}`}>{question.text}</p>
-
-          {/* Answer box */}
-          <div className="mt-2 bg-gray-100 rounded-xl py-2 px-4 text-3xl font-black text-gray-800 min-h-[48px] flex items-center justify-center">
-            {input ? input : <span className="text-gray-300 text-2xl">{t.placeholder}</span>}
+          {/* Question & Answer Inline */}
+          <div className=" bg-gray-50 rounded-xl px-1 text-3xl font-black min-h-[50px] flex items-center justify-center gap-3 border-2 border-gray-200 shadow-inner">
+            <span className={`${theme.text} opacity-90`}>{question.text.replace('?', '')}</span>
+            <span className="text-gray-800 min-w-[60px] text-center border-b-4 border-dashed border-gray-300 pb-1">
+              {input ? input : <span className="text-transparent">_</span>}
+            </span>
           </div>
 
           {/* Feedback label */}
@@ -116,14 +117,14 @@ export default function TeamCalculator({
         {/* Number pad */}
         <div className="space-y-3">
           {PAD_ROWS.map((row, ri) => (
-            <div key={ri} className={`grid gap-3 ${row.length === 1 ? 'grid-cols-1' : 'grid-cols-3'}`}>
+            <div key={ri} className={`grid gap-2 ${row.length === 1 ? 'grid-cols-1' : 'grid-cols-3'}`}>
               {row.map(digit => (
                 <Button
                   key={digit}
                   onClick={() => onDigit(digit)}
                   disabled={disabled}
-                  className="h-16 sm:h-20 text-3xl font-black rounded-2xl transition-transform hover:scale-105 active:scale-95 flex items-center justify-center"
-                  style={{ backgroundColor: 'white', color: theme.accent, borderColor: theme.accent, borderWidth: 3 }}
+                  className="h-24 sm:h-28 text-3xl font-black rounded-xl transition-transform hover:scale-105 active:scale-95 flex items-center justify-center"
+                  style={{ backgroundColor: 'white', color: theme.accent, borderColor: theme.accent, borderWidth: 2 }}
                 >
                   {digit}
                 </Button>
@@ -137,16 +138,16 @@ export default function TeamCalculator({
           <Button
             onClick={onBackspace}
             disabled={disabled || !input}
-            className="h-14 sm:h-16 text-xl font-black rounded-2xl"
-            style={{ backgroundColor: '#f59e0b', borderColor: '#d97706', color: 'white', borderWidth: 2 }}
+            className="h-20 sm:h-24 text-3xl font-black rounded-3xl"
+            style={{ backgroundColor: '#f59e0b', borderColor: '#d97706', color: 'white', borderWidth: 4 }}
           >
             {t.btnBack}
           </Button>
           <Button
             onClick={onSubmit}
             disabled={disabled || !input}
-            className="h-14 sm:h-16 text-xl font-black rounded-2xl"
-            style={{ backgroundColor: theme.accent, borderColor: theme.accent, color: 'white', borderWidth: 2 }}
+            className="h-20 sm:h-24 text-3xl font-black rounded-3xl"
+            style={{ backgroundColor: theme.accent, borderColor: theme.accent, color: 'white', borderWidth: 4 }}
           >
             {t.btnGo}
           </Button>
