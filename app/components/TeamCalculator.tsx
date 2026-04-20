@@ -123,10 +123,10 @@ export default function TeamCalculator({
                   key={digit}
                   onClick={() => onDigit(digit)}
                   disabled={disabled}
-                  className="h-24 sm:h-28 text-3xl font-black rounded-xl transition-transform hover:scale-105 active:scale-95 flex items-center justify-center"
+                  className="h-24 sm:h-28 rounded-xl transition-transform hover:scale-105 active:scale-95 flex items-center justify-center"
                   style={{ backgroundColor: 'white', color: theme.accent, borderColor: theme.accent, borderWidth: 2 }}
                 >
-                  {digit}
+                  <span className='text-2xl font-black'>{digit}</span>
                 </Button>
               ))}
             </div>
