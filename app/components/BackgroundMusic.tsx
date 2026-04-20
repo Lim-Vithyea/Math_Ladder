@@ -11,7 +11,7 @@ export default function BackgroundMusic({ t }: { t: Translations }) {
   useEffect(() => {
     // In Next.js, files in the public folder are served from the root URL.
     // So we just use '/filename.mp3' instead of the local hard drive path.
-    audioRef.current = new Audio('/Ai Đưa Em Về   Low Cortisol Song (Agnes Tachyon AI Cover) [Cukak Remix] (1) (1).mp3');
+    audioRef.current = new Audio('/bg-music.mp3');
     audioRef.current.loop = true; // Make it loop forever!
     audioRef.current.volume = 1; // Keep the volume low so it's not annoying
 

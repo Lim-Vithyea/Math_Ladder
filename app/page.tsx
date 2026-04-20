@@ -148,13 +148,13 @@ export default function GamePage() {
               <BackgroundMusic t={t} />
             </div>
 
-            <h1 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent inline-block select-none py-2 leading-normal">
+            <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent inline-block select-none py-2 leading-normal">
               {t.title}
             </h1>
-            <p className="text-gray-600 font-bold text-base lg:text-lg mt-2">
+            <p className="text-gray-600 font-bold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent select-none py-2 leading-normal text-base lg:text-lg">
               {t.subtitle}
             </p>
-            <p className="text-gray-400 text-sm mt-1 font-semibold">{t.hint}</p>
+            <p className="text-gray-400 text-sm mt-1 font-semibold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent select-none py-2 leading-normal">{t.hint}</p>
           </header>
 
           <main className="flex flex-col landscape:flex-row md:flex-row items-center md:items-start justify-center gap-6 md:gap-9 px-2 flex-1 w-full max-w-[1400px] mx-auto">
