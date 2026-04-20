@@ -20,10 +20,10 @@ export default function LandingPage() {
       <App>
         <MathParticles />
         <div className="min-h-screen flex flex-col items-center justify-center p-4 relative z-10 overflow-hidden bg-slate-50">
-          
+
           {/* Language Toggle */}
           <div className="absolute top-6 right-6 z-20">
-            <Button 
+            <Button
               size="large"
               onClick={toggleLang}
               className="font-bold rounded-xl shadow-md border-2 border-violet-200 hover:border-violet-400 transition-all bg-white"
@@ -43,12 +43,12 @@ export default function LandingPage() {
 
           <main className="w-full max-w-5xl">
             <Row gutter={[32, 32]} justify="center">
-              
+
               {/* Ladder Race Card */}
               <Col xs={24} md={12}>
                 <Link href="/ladder-race">
-                  <Card 
-                    hoverable 
+                  <Card
+                    hoverable
                     className="h-full rounded-3xl border-4 border-violet-100 shadow-xl overflow-hidden group transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-violet-400"
                     styles={{ body: { padding: '40px 32px' } }}
                   >
@@ -62,9 +62,9 @@ export default function LandingPage() {
                       <Text className="text-lg text-gray-500 font-semibold mb-8 h-12">
                         {t.ladderDesc}
                       </Text>
-                      <Button 
-                        type="primary" 
-                        size="large" 
+                      <Button
+                        type="primary"
+                        size="large"
                         className="h-14 px-10 rounded-2xl text-xl font-black bg-violet-600 border-none shadow-lg group-hover:bg-violet-700 transition-colors"
                       >
                         {t.start}
@@ -77,8 +77,8 @@ export default function LandingPage() {
               {/* Speed Challenge Card */}
               <Col xs={24} md={12}>
                 <Link href="/speed-challenge">
-                  <Card 
-                    hoverable 
+                  <Card
+                    hoverable
                     className="h-full rounded-3xl border-4 border-orange-100 shadow-xl overflow-hidden group transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-orange-400"
                     styles={{ body: { padding: '40px 32px' } }}
                   >
@@ -92,9 +92,9 @@ export default function LandingPage() {
                       <Text className="text-lg text-gray-500 font-semibold mb-8 h-12">
                         {t.speedDesc}
                       </Text>
-                      <Button 
-                        type="primary" 
-                        size="large" 
+                      <Button
+                        type="primary"
+                        size="large"
                         className="h-14 px-10 rounded-2xl text-xl font-black bg-orange-500 border-none shadow-lg group-hover:bg-orange-600 transition-colors"
                       >
                         {t.start}
@@ -108,7 +108,7 @@ export default function LandingPage() {
           </main>
 
           <footer className="mt-16 text-gray-400 font-bold select-none opacity-50">
-            © 2024 Math Adventure Games • Practice & Fun
+            © 2026 by Lim Vithyea and Doem Samaun
           </footer>
         </div>
       </App>
