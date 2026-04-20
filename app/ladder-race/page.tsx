@@ -13,15 +13,15 @@
  */
 
 import React, { useState, useCallback } from 'react';
-import { ConfigProvider, App, Button, Dropdown } from 'antd';
+import { ConfigProvider, App, Button } from 'antd';
 
-import TeamCalculator from './components/TeamCalculator';
-import LadderScene from './components/LadderScene';
-import WinnerModal from './components/WinnerModal';
-import MathParticles from './components/MathParticles';
-import GameSidebar from './components/GameSidebar';
-import { generateQuestion, type Question, type Difficulty, type QuestionType } from './utils/gameUtils';
-import { TRANSLATIONS, type Lang } from './i18n/translations';
+import TeamCalculator from '../components/TeamCalculator';
+import LadderScene from '../components/LadderScene';
+import WinnerModal from '../components/WinnerModal';
+import MathParticles from '../components/MathParticles';
+import GameSidebar from '../components/GameSidebar';
+import { generateQuestion, type Question, type Difficulty, type QuestionType } from '../utils/gameUtils';
+import { TRANSLATIONS, type Lang } from '../i18n/translations';
 
 // ── Constants ─────────────────────────────────────────────────────
 const TOTAL_STEPS = 10; // steps to reach the top
@@ -121,7 +121,12 @@ export default function GamePage() {
       } else {
         // Decrease score by 1 if wrong, but don't go below 0
         const newScore = Math.max(0, s.score - 1);
-        return { ...s, score: newScore, input: '', feedback: 'wrong' };
+        return { 
+          ...s, 
+          score: newScore, 
+          input: '', 
+          feedback: 'wrong',
+        };
       }
     });
 
@@ -148,7 +153,7 @@ export default function GamePage() {
           style={{ zIndex: 1 }}
         >
           <header className="text-center py-8 px-4 relative">
-            <div className="absolute top-4 right-4 flex gap-2 z-50">
+            <div className="absolute top-4 right-4 z-50">
               <Button
                 type="primary"
                 size="large"
@@ -194,8 +199,8 @@ export default function GamePage() {
 
           <main className="flex flex-col landscape:flex-row md:flex-row items-center md:items-start justify-center gap-6 md:gap-9 px-2 flex-1 w-full max-w-[1400px] mx-auto">
 
-            {/* Central ladder (Mobile Portrait: Top, Landscape/Desktop: Middle) */}
-            <div className="order-1 landscape:order-2 md:order-2 shrink-0 transform scale-75 landscape:scale-[0.8] md:scale-100 lg:scale-[1] origin-top">
+            {/* Central ladder */}
+            <div className="order-1 landscape:order-2 md:order-2 shrink-0 transform scale-75 landscape:scale-[0.6] md:scale-100 lg:scale-[1] origin-top md:origin-center">
               <LadderScene
                 redScore={red.score}
                 blueScore={blue.score}
@@ -203,8 +208,8 @@ export default function GamePage() {
               />
             </div>
 
-            {/* Red team (Mobile Portrait: Middle, Landscape/Desktop: Left) */}
-            <div className="order-2 landscape:order-1 md:order-1 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px] flex justify-center">
+            {/* Red team */}
+            <div className="order-2 landscape:order-1 md:order-1 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px]">
               <TeamCalculator
                 team="red"
                 teamName={t.foxTeam}
@@ -223,8 +228,8 @@ export default function GamePage() {
               />
             </div>
 
-            {/* Blue team (Mobile Portrait: Bottom, Landscape/Desktop: Right) */}
-            <div className="order-3 landscape:order-3 md:order-3 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px] flex justify-center">
+            {/* Blue team */}
+            <div className="order-3 landscape:order-3 md:order-3 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px]">
               <TeamCalculator
                 team="blue"
                 teamName={t.penguinTeam}
@@ -243,9 +248,9 @@ export default function GamePage() {
               />
             </div>
 
-
           </main>
         </div>
+
 
         {/* Winner overlay */}
         {winner && (

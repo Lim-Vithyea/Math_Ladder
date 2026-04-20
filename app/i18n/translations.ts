@@ -38,6 +38,37 @@ export interface Translations {
   wins: string;               // appended after team name, e.g. "Fox Team Wins!"
   winnerSub: string;
   playAgain: string;
+
+  // ── Sidebar & Settings ──────────────────────────
+  settings: string;
+  gameMode: string;
+  modeCalculator: string;
+  modeChoices: string;
+  resetGame: string;
+
+  // ── Exercise Types ──────────────────────────────
+  exerciseType: string;
+  typeAddition: string;
+  typeSubtraction: string;
+  typeMultiplication: string;
+  typeDivision: string;
+  typeMixed: string;
+
+  // ── Menu ────────────────────────────────────────
+  menuTitle: string;
+  menuSubtitle: string;
+  ladderGame: string;
+  ladderDesc: string;
+  speedGame: string;
+  speedDesc: string;
+  backToMenu: string;
+
+  // ── Speed Challenge ──────────────────────────────
+  start: string;
+  timeLeft: string;
+  score: string;
+  timesUp: string;
+  finalScore: string;
 }
 
 const en: Translations = {
@@ -65,6 +96,33 @@ const en: Translations = {
   wins: 'Wins!',
   winnerSub: 'Amazing math skills! You climbed all the way up! 🎉',
   playAgain: '🔄 Play Again!',
+
+  settings: 'Settings ⚙️',
+  gameMode: 'Game Mode',
+  modeCalculator: 'Calculator 🔢',
+  modeChoices: 'Multiple Choice ✅',
+  resetGame: 'Reset Game 🔄',
+
+  exerciseType: 'Exercise Type',
+  typeAddition: 'Addition (+)',
+  typeSubtraction: 'Subtraction (-)',
+  typeMultiplication: 'Multiplication (x)',
+  typeDivision: 'Division (÷)',
+  typeMixed: 'Mixed All (✨)',
+
+  menuTitle: 'Choose Your Math Adventure! 🚀',
+  menuSubtitle: 'Pick a game and start practicing your math skills!',
+  ladderGame: 'Ladder Race 🪜',
+  ladderDesc: 'Race to the top of the ladder! First to 10 points wins!',
+  speedGame: 'Speed Challenge ⏱️',
+  speedDesc: 'How many can you solve in 60 seconds? Go for a high score!',
+  backToMenu: '🏠 Back to Menu',
+
+  start: 'Start Game! 🏁',
+  timeLeft: 'Time Left',
+  score: 'Score',
+  timesUp: "Time's Up! ⌛",
+  finalScore: 'Final Score',
 };
 
 const km: Translations = {
@@ -93,6 +151,33 @@ const km: Translations = {
   wins: 'ឈ្នះ!',
   winnerSub: 'ជំនាញគណិតវិទ្យាល្អណាស់! អ្នកឡើងដល់កំពូលហើយ! 🎉',
   playAgain: '🔄 លេងម្ដងទៀត!',
+
+  settings: 'ការកំណត់ ⚙️',
+  gameMode: 'របៀបលេង',
+  modeCalculator: 'ម៉ាស៊ីនគិតលេខ 🔢',
+  modeChoices: 'ជ្រើសរើសចម្លើយ ✅',
+  resetGame: 'លេងឡើងវិញ 🔄',
+
+  exerciseType: 'ប្រភេទលំហាត់',
+  typeAddition: 'លំហាត់បូក (+)',
+  typeSubtraction: 'លំហាត់ដក (-)',
+  typeMultiplication: 'លំហាត់គុណ (x)',
+  typeDivision: 'លំហាត់ចែក (÷)',
+  typeMixed: 'លំហាត់ចម្រុះ (✨)',
+
+  menuTitle: 'ជ្រើសរើសការផ្សងព្រេងគណិតវិទ្យារបស់អ្នក! 🚀',
+  menuSubtitle: 'ជ្រើសរើសហ្គេមមួយ ហើយចាប់ផ្តើមហ្វឹកហាត់ជំនាញគណិតវិទ្យារបស់អ្នក!',
+  ladderGame: 'ការប្រណាំងជណ្តើរ 🪜',
+  ladderDesc: 'ប្រណាំងទៅកាន់កំពូលជណ្តើរ! អ្នកដល់លេខ ១០ មុនគេឈ្នះ!',
+  speedGame: 'ការប្រកួតល្បឿន ⏱️',
+  speedDesc: 'តើអ្នកអាចដោះស្រាយបានប៉ុន្មានក្នុងរយៈពេល ៦០ វិនាទី? រកពិន្ទុឱ្យបានច្រើន!',
+  backToMenu: '🏠 ត្រឡប់ទៅម៉ឺនុយវិញ',
+
+  start: 'ចាប់ផ្តើមហ្គេម! 🏁',
+  timeLeft: 'ពេលវេលានៅសល់',
+  score: 'ពិន្ទុ',
+  timesUp: "អស់ម៉ោងហើយ! ⌛",
+  finalScore: 'ពិន្ទុចុងក្រោយ',
 };
 
 export const TRANSLATIONS: Record<Lang, Translations> = { en, km };
