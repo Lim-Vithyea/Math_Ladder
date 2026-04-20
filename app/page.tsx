@@ -1,65 +1,215 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+/**
+ * page.tsx — Math Ladder Race 🧮
+ *
+ * Game Rules:
+ *   - Red team (🦊 Fox) vs Blue team (🐧 Penguin)
+ *   - Each team gets a math question on their own calculator
+ *   - Submit the correct answer → character climbs 1 step up the ladder
+ *   - First team to reach step 10 wins!
+ *
+ * State is kept here; child components are purely presentational.
+ */
+
+import React, { useState, useCallback } from 'react';
+import { ConfigProvider, App, Button } from 'antd';
+
+import TeamCalculator from './components/TeamCalculator';
+import LadderScene from './components/LadderScene';
+import WinnerModal from './components/WinnerModal';
+import MathParticles from './components/MathParticles';
+import { generateQuestion, type Question } from './utils/gameUtils';
+import { TRANSLATIONS, type Lang } from './i18n/translations';
+
+// ── Constants ─────────────────────────────────────────────────────
+const TOTAL_STEPS = 10; // steps to reach the top
+
+// ── Types ─────────────────────────────────────────────────────────
+type Team = 'red' | 'blue';
+
+interface TeamState {
+  score: number;                      // 0 – TOTAL_STEPS
+  question: Question;                    // active math problem
+  input: string;                      // digits typed so far
+  feedback: 'correct' | 'wrong' | null; // feedback after submit
+}
+
+// ── Helpers ───────────────────────────────────────────────────────
+function freshTeam(): TeamState {
+  return { score: 0, question: generateQuestion(), input: '', feedback: null };
+}
+
+// ── Component ─────────────────────────────────────────────────────
+export default function GamePage() {
+  const [red, setRed] = useState<TeamState>(freshTeam);
+  const [blue, setBlue] = useState<TeamState>(freshTeam);
+  const [winner, setWinner] = useState<Team | null>(null);
+
+  // ── Language toggle ────────────────────────────────────────────
+  const [lang, setLang] = useState<Lang>('en');
+  const t = TRANSLATIONS[lang]; // shorthand for current translations
+
+  // Shorthand: pick the right setter
+  const setter = (team: Team) => team === 'red' ? setRed : setBlue;
+
+  // ── Digit pressed ──────────────────────────────────────────────
+  const handleDigit = useCallback((team: Team, digit: string) => {
+    if (winner) return;
+    setter(team)(s => ({
+      ...s,
+      input: s.input.length < 3 ? s.input + digit : s.input,
+    }));
+  }, [winner]);
+
+  // ── Backspace pressed ──────────────────────────────────────────
+  const handleBackspace = useCallback((team: Team) => {
+    if (winner) return;
+    setter(team)(s => ({ ...s, input: s.input.slice(0, -1) }));
+  }, [winner]);
+
+  // ── Submit answer ──────────────────────────────────────────────
+  const handleSubmit = useCallback((team: Team) => {
+    if (winner) return;
+
+    setter(team)(s => {
+      const userAnswer = parseInt(s.input, 10);
+      const correct = !isNaN(userAnswer) && userAnswer === s.question.answer;
+
+      if (correct) {
+        const newScore = s.score + 1;
+        const won = newScore >= TOTAL_STEPS;
+        if (won) setWinner(team);
+        return {
+          ...s,
+          score: newScore,
+          question: won ? s.question : generateQuestion(),
+          input: '',
+          feedback: 'correct',
+        };
+      } else {
+        return { ...s, input: '', feedback: 'wrong' };
+      }
+    });
+
+    // Clear feedback after 700ms
+    setTimeout(() => {
+      setter(team)(s => ({ ...s, feedback: null }));
+    }, 700);
+  }, [winner]);
+
+  // ── Reset game ─────────────────────────────────────────────────
+  const handleReset = useCallback(() => {
+    setRed(freshTeam());
+    setBlue(freshTeam());
+    setWinner(null);
+  }, []);
+
+  // ── Render ─────────────────────────────────────────────────────
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <ConfigProvider theme={{ token: { fontFamily: 'inherit' } }}>
+      <App>
+        <MathParticles />
+        <div
+          className="min-h-screen flex flex-col relative bg-transparent"
+          style={{ zIndex: 1 }}
+        >
+          <header className="text-center py-8 px-4 relative">
+            <div className="absolute top-4 right-4 flex gap-2">
+              <Button
+                onClick={() => setLang('en')}
+                style={{
+                  fontWeight: 800,
+                  borderRadius: 12,
+                  borderWidth: 2,
+                  backgroundColor: lang === 'en' ? '#3b82f6' : 'white',
+                  borderColor: lang === 'en' ? '#3b82f6' : '#93c5fd',
+                  color: lang === 'en' ? 'white' : '#3b82f6',
+                  minWidth: 56,
+                }}
+              >
+                EN
+              </Button>
+              <Button
+                onClick={() => setLang('km')}
+                style={{
+                  fontWeight: 800,
+                  borderRadius: 12,
+                  borderWidth: 2,
+                  backgroundColor: lang === 'km' ? '#7c3aed' : 'white',
+                  borderColor: lang === 'km' ? '#7c3aed' : '#c4b5fd',
+                  color: lang === 'km' ? 'white' : '#7c3aed',
+                  minWidth: 56,
+                }}
+              >
+                ខ្មែរ
+              </Button>
+            </div>
+            <h1 className="text-4xl lg:text-5xl font-black select-none text-gray-800">
+              {t.title}
+            </h1>
+            <p className="text-gray-600 font-bold text-base lg:text-lg mt-2">
+              {t.subtitle}
+            </p>
+            <p className="text-gray-400 text-sm mt-1 font-semibold">{t.hint}</p>
+          </header>
+
+          <main className="flex items-start justify-center gap-4 lg:gap-32 px-4 pb-10 flex-1 flex-wrap">
+
+            {/* Red team */}
+            <TeamCalculator
+              team="red"
+              teamName={t.foxTeam}
+              emoji="🦊"
+              score={red.score}
+              totalSteps={TOTAL_STEPS}
+              question={red.question}
+              input={red.input}
+              feedback={red.feedback}
+              disabled={!!winner}
+              t={t}
+              onDigit={(d) => handleDigit('red', d)}
+              onBackspace={() => handleBackspace('red')}
+              onSubmit={() => handleSubmit('red')}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+            {/* Central ladder */}
+            <LadderScene
+              redScore={red.score}
+              blueScore={blue.score}
+              totalSteps={TOTAL_STEPS}
+            />
+
+            {/* Blue team */}
+            <TeamCalculator
+              team="blue"
+              teamName={t.penguinTeam}
+              emoji="🐧"
+              score={blue.score}
+              totalSteps={TOTAL_STEPS}
+              question={blue.question}
+              input={blue.input}
+              feedback={blue.feedback}
+              disabled={!!winner}
+              t={t}
+              onDigit={(d) => handleDigit('blue', d)}
+              onBackspace={() => handleBackspace('blue')}
+              onSubmit={() => handleSubmit('blue')}
+            />
+
+          </main>
         </div>
-      </main>
-    </div>
+
+        {/* Winner overlay */}
+        {winner && (
+          <WinnerModal
+            winner={winner}
+            winnerName={winner === 'red' ? t.foxTeam : t.penguinTeam}
+            t={t}
+            onReset={handleReset}
+          />
+        )}
+      </App>
+    </ConfigProvider>
   );
 }
