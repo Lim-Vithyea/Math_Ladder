@@ -121,10 +121,10 @@ export default function GamePage() {
       } else {
         // Decrease score by 1 if wrong, but don't go below 0
         const newScore = Math.max(0, s.score - 1);
-        return { 
-          ...s, 
-          score: newScore, 
-          input: '', 
+        return {
+          ...s,
+          score: newScore,
+          input: '',
           feedback: 'wrong',
         };
       }
@@ -209,7 +209,7 @@ export default function GamePage() {
             </div>
 
             {/* Red team */}
-            <div className="order-2 landscape:order-1 md:order-1 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px]">
+            <div className="order-2 landscape:order-1 md:order-1 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px] flex justify-center">
               <TeamCalculator
                 team="red"
                 teamName={t.foxTeam}
@@ -229,7 +229,7 @@ export default function GamePage() {
             </div>
 
             {/* Blue team */}
-            <div className="order-3 landscape:order-3 md:order-3 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px]">
+            <div className="order-3 landscape:order-3 md:order-3 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px] flex justify-center">
               <TeamCalculator
                 team="blue"
                 teamName={t.penguinTeam}
