@@ -25,6 +25,10 @@ export interface Translations {
   btnBack: string;
   btnGo: string;
 
+  // ── Music ───────────────────────────────────────
+  musicOn: string;
+  musicOff: string;
+
   // ── Winner modal ────────────────────────────────
   wins: string;               // appended after team name, e.g. "Fox Team Wins!"
   winnerSub: string;
@@ -47,6 +51,9 @@ const en: Translations = {
   btnBack:         '⌫ Back',
   btnGo:           '✓ Go!',
 
+  musicOn:         '🔊 Music On',
+  musicOff:        '🔇 Music Off',
+
   wins:            'Wins!',
   winnerSub:       'Amazing math skills! You climbed all the way up! 🎉',
   playAgain:       '🔄 Play Again!',
@@ -67,6 +74,9 @@ const km: Translations = {
   feedbackWrong:   '❌ ខុស! ព្យាយាមម្ដងទៀត!',
   btnBack:         '⌫ ថយ',
   btnGo:           '✓ ទៅ!',
+
+  musicOn:         '🔊 បើកសំឡេង',
+  musicOff:        '🔇 បិទសំឡេង',
 
   wins:            'ឈ្នះ!',
   winnerSub:       'ជំនាញគណិតវិទ្យាល្អណាស់! អ្នកឡើងដល់កំពូលហើយ! 🎉',

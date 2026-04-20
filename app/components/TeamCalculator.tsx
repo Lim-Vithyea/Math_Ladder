@@ -114,16 +114,16 @@ export default function TeamCalculator({
         </div>
 
         {/* Number pad */}
-        <div className="space-y-2">
+        <div className="space-y-3">
           {PAD_ROWS.map((row, ri) => (
-            <div key={ri} className={`grid gap-2 ${row.length === 1 ? 'grid-cols-1' : 'grid-cols-3'}`}>
+            <div key={ri} className={`grid gap-3 ${row.length === 1 ? 'grid-cols-1' : 'grid-cols-3'}`}>
               {row.map(digit => (
                 <Button
                   key={digit}
                   onClick={() => onDigit(digit)}
                   disabled={disabled}
-                  className="h-12 text-xl font-black rounded-xl transition-transform hover:scale-105 active:scale-95"
-                  style={{ backgroundColor: 'white', color: theme.accent, borderColor: theme.accent, borderWidth: 2 }}
+                  className="h-16 sm:h-20 text-3xl font-black rounded-2xl transition-transform hover:scale-105 active:scale-95 flex items-center justify-center"
+                  style={{ backgroundColor: 'white', color: theme.accent, borderColor: theme.accent, borderWidth: 3 }}
                 >
                   {digit}
                 </Button>
@@ -133,20 +133,20 @@ export default function TeamCalculator({
         </div>
 
         {/* Action buttons */}
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-3 mt-4">
           <Button
             onClick={onBackspace}
             disabled={disabled || !input}
-            className="h-12 text-lg font-black rounded-xl"
-            style={{ backgroundColor: '#f59e0b', borderColor: '#d97706', color: 'white' }}
+            className="h-14 sm:h-16 text-xl font-black rounded-2xl"
+            style={{ backgroundColor: '#f59e0b', borderColor: '#d97706', color: 'white', borderWidth: 2 }}
           >
             {t.btnBack}
           </Button>
           <Button
             onClick={onSubmit}
             disabled={disabled || !input}
-            className="h-12 text-lg font-black rounded-xl"
-            style={{ backgroundColor: theme.accent, borderColor: theme.accent, color: 'white' }}
+            className="h-14 sm:h-16 text-xl font-black rounded-2xl"
+            style={{ backgroundColor: theme.accent, borderColor: theme.accent, color: 'white', borderWidth: 2 }}
           >
             {t.btnGo}
           </Button>

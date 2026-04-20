@@ -19,6 +19,7 @@ import TeamCalculator from './components/TeamCalculator';
 import LadderScene from './components/LadderScene';
 import WinnerModal from './components/WinnerModal';
 import MathParticles from './components/MathParticles';
+import BackgroundMusic from './components/BackgroundMusic';
 import { generateQuestion, type Question } from './utils/gameUtils';
 import { TRANSLATIONS, type Lang } from './i18n/translations';
 
@@ -115,7 +116,7 @@ export default function GamePage() {
           style={{ zIndex: 1 }}
         >
           <header className="text-center py-8 px-4 relative">
-            <div className="absolute top-4 right-4 flex gap-2">
+            <div className=" absolute top-4 right-4 flex gap-2">
               <Button
                 onClick={() => setLang('en')}
                 style={{
@@ -144,8 +145,10 @@ export default function GamePage() {
               >
                 ខ្មែរ
               </Button>
+              <BackgroundMusic t={t} />
             </div>
-            <h1 className="text-4xl lg:text-5xl font-black select-none text-gray-800">
+
+            <h1 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent inline-block select-none py-2 leading-normal">
               {t.title}
             </h1>
             <p className="text-gray-600 font-bold text-base lg:text-lg mt-2">
@@ -154,7 +157,7 @@ export default function GamePage() {
             <p className="text-gray-400 text-sm mt-1 font-semibold">{t.hint}</p>
           </header>
 
-          <main className="flex flex-col landscape:flex-row md:flex-row items-center md:items-start justify-center gap-6 md:gap-12 px-2 pb-4 flex-1 w-full max-w-[1400px] mx-auto">
+          <main className="flex flex-col landscape:flex-row md:flex-row items-center md:items-start justify-center gap-6 md:gap-9 px-2 flex-1 w-full max-w-[1400px] mx-auto">
 
             {/* Central ladder (Mobile Portrait: Top, Landscape/Desktop: Middle) */}
             <div className="order-1 landscape:order-2 md:order-2 shrink-0 transform scale-75 landscape:scale-[0.6] md:scale-100 lg:scale-[1] origin-top md:origin-center">
