@@ -180,7 +180,7 @@ export default function GamePage() {
             <p className="text-gray-600 font-bold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent select-none py-2 leading-normal text-base lg:text-lg">
               {t.subtitle}
             </p>
-            <p className="text-gray-400 text-sm mt-1 font-semibold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent select-none py-2 leading-normal">{t.hint}</p>
+            {/* <p className="text-gray-400 text-sm mt-1 font-semibold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent select-none py-2 leading-normal">{t.hint}</p> */}
           </header>
 
           <GameSidebar
@@ -198,7 +198,7 @@ export default function GamePage() {
             t={t}
           />
 
-          <main className="flex flex-col landscape:flex-row md:flex-row items-center md:items-start justify-center gap-6 md:gap-9 px-2 flex-1 w-full max-w-[1400px] mx-auto">
+          <main className="flex flex-col landscape:flex-row md:flex-row items-center md:items-start justify-center gap-6 md:gap-9  w-full w-auto max-h-[600px]">
 
             {/* Central ladder */}
             <div className="order-1 landscape:order-2 md:order-2 shrink-0 transform scale-75 landscape:scale-[0.6] md:scale-100 lg:scale-[1] origin-top">

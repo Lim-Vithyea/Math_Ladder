@@ -61,7 +61,7 @@ const THEMES = {
 
 export default function TeamCalculator({
   team, teamName, emoji, score, totalSteps, question,
-  input, feedback, disabled, gameMode = 'calculator', 
+  input, feedback, disabled, gameMode = 'calculator',
   hideProgress = false, t, onDigit, onBackspace, onSubmit,
 }: Props) {
   const theme = THEMES[team];
@@ -129,14 +129,14 @@ export default function TeamCalculator({
             {/* Number pad */}
             <div className="space-y-3">
               {PAD_ROWS.map((row, ri) => (
-                <div key={ri} className={`grid gap-2 ${row.length === 1 ? 'grid-cols-1' : 'grid-cols-3'}`}>
+                <div key={ri} className={`grid gap-4 ${row.length === 1 ? 'grid-cols-1' : 'grid-cols-3'}`}>
                   {row.map(digit => (
                     <Button
                       key={digit}
                       onClick={() => onDigit(digit)}
                       disabled={disabled}
-                      className="h-24 sm:h-28 rounded-xl transition-transform hover:scale-105 active:scale-95 flex items-center justify-center"
-                      style={{ backgroundColor: 'white', color: theme.accent, borderColor: theme.accent, borderWidth: 2 }}
+                      className="rounded-xl transition-transform hover:scale-105 active:scale-95 flex items-center justify-center shadow-xl border-4"
+                      style={{ backgroundColor: 'white', color: theme.accent, borderColor: theme.accent, height: '60px' }}
                     >
                       <span className='text-2xl font-black'>{digit}</span>
                     </Button>
@@ -146,20 +146,20 @@ export default function TeamCalculator({
             </div>
 
             {/* Action buttons */}
-            <div className="grid grid-cols-2 gap-3 mt-4">
+            <div className="grid grid-cols-2 gap-5 mt-1">
               <Button
                 onClick={onBackspace}
                 disabled={disabled || !input}
-                className="h-20 sm:h-24 text-3xl font-black rounded-3xl"
-                style={{ backgroundColor: '#f59e0b', borderColor: '#d97706', color: 'white', borderWidth: 4 }}
+                className="text-5xl font-black rounded-[2rem] shadow-2xl border-4"
+                style={{ backgroundColor: '#f59e0b', borderColor: '#d97706', color: 'white' }}
               >
                 {t.btnBack}
               </Button>
               <Button
                 onClick={() => onSubmit()}
                 disabled={disabled || !input}
-                className="h-20 sm:h-24 text-3xl font-black rounded-3xl"
-                style={{ backgroundColor: theme.accent, borderColor: theme.accent, color: 'white', borderWidth: 4 }}
+                className="h-40 text-5xl font-black rounded-[2rem] shadow-2xl border-4"
+                style={{ backgroundColor: theme.accent, borderColor: theme.accent, color: 'white' }}
               >
                 {t.btnGo}
               </Button>
