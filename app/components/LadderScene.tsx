@@ -66,7 +66,7 @@ export default function LadderScene({ redScore, blueScore, totalSteps }: Props) 
   const ladderHeight = totalSteps * STEP_HEIGHT;
 
   return (
-    <div className="flex flex-col items-center select-none shrink-0" style={{ width: 300 }}>
+    <div className="flex flex-col items-center select-none shrink-0" style={{ width: 400 }}>
 
       {/* Trophy centered between the ladders */}
       <div className="text-5xl mb-2 animate-float drop-shadow-lg text-center">🏆</div>
@@ -77,7 +77,7 @@ export default function LadderScene({ redScore, blueScore, totalSteps }: Props) 
       </div>
 
       {/* Two Ladders Container */}
-      <div className="flex justify-between w-full px-6" style={{ height: ladderHeight }}>
+      <div className="flex justify-between w-full" style={{ height: ladderHeight }}>
         {/* Red side */}
         <SingleLadder score={redScore} totalSteps={totalSteps} emoji="🦊" color="#dc2626" />
 

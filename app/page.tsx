@@ -197,7 +197,7 @@ export default function GamePage() {
           <main className="flex flex-col landscape:flex-row md:flex-row items-center md:items-start justify-center gap-6 md:gap-9 px-2 flex-1 w-full max-w-[1400px] mx-auto">
 
             {/* Central ladder (Mobile Portrait: Top, Landscape/Desktop: Middle) */}
-            <div className="order-1 landscape:order-2 md:order-2 shrink-0 transform scale-75 landscape:scale-[0.6] md:scale-100 lg:scale-[1] origin-top md:origin-center">
+            <div className="order-1 landscape:order-2 md:order-2 shrink-0 transform scale-75 landscape:scale-[0.8] md:scale-100 lg:scale-[1] origin-top">
               <LadderScene
                 redScore={red.score}
                 blueScore={blue.score}
@@ -206,7 +206,7 @@ export default function GamePage() {
             </div>
 
             {/* Red team (Mobile Portrait: Middle, Landscape/Desktop: Left) */}
-            <div className="order-2 landscape:order-1 md:order-1 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px]">
+            <div className="order-2 landscape:order-1 md:order-1 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px] flex justify-center">
               <TeamCalculator
                 team="red"
                 teamName={t.foxTeam}
@@ -225,7 +225,7 @@ export default function GamePage() {
             </div>
 
             {/* Blue team (Mobile Portrait: Bottom, Landscape/Desktop: Right) */}
-            <div className="order-3 landscape:order-3 md:order-3 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px]">
+            <div className="order-3 landscape:order-3 md:order-3 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px] flex justify-center">
               <TeamCalculator
                 team="blue"
                 teamName={t.penguinTeam}
