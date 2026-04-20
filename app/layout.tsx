@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito, Kantumruy_Pro } from "next/font/google";
 import "./globals.css";
+import { SettingsProvider } from "./context/SettingsContext";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -34,7 +35,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           margin: 0,
         }}
       >
-        {children}
+        <SettingsProvider>
+          {children}
+        </SettingsProvider>
       </body>
     </html>
   );

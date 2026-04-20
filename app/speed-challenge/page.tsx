@@ -10,6 +10,8 @@ import GameSidebar from '../components/GameSidebar';
 import { generateQuestion, type Question, type Difficulty, type QuestionType } from '../utils/gameUtils';
 import { TRANSLATIONS, type Lang } from '../i18n/translations';
 
+import { useSettings } from '../context/SettingsContext';
+
 const { Title, Text } = Typography;
 
 // ── Constants ─────────────────────────────────────────────────────
@@ -31,15 +33,17 @@ function freshTeam(diff: Difficulty, mode: GameMode, type: QuestionType): TeamSt
 }
 
 export default function SpeedChallengePage() {
-  const [difficulty, setDifficulty] = useState<Difficulty>('easy');
-  const [gameMode, setGameMode] = useState<GameMode>('calculator');
-  const [exerciseType, setExerciseType] = useState<QuestionType>('mixed');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [lang, setLang] = useState<Lang>('en');
-  const t = TRANSLATIONS[lang];
+  const { 
+    difficulty, setDifficulty, 
+    gameMode, setGameMode, 
+    exerciseType, setExerciseType, 
+    lang, setLang, t 
+  } = useSettings();
 
-  const [red, setRed] = useState<TeamState>(() => freshTeam('easy', 'calculator', 'mixed'));
-  const [blue, setBlue] = useState<TeamState>(() => freshTeam('easy', 'calculator', 'mixed'));
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const [red, setRed] = useState<TeamState>(() => freshTeam(difficulty, gameMode, exerciseType));
+  const [blue, setBlue] = useState<TeamState>(() => freshTeam(difficulty, gameMode, exerciseType));
   const [winner, setWinner] = useState<Team | 'draw' | null>(null);
 
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);

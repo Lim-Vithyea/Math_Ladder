@@ -44,7 +44,7 @@ function SingleLadder({ score, totalSteps, emoji, color }: { score: number, tota
           <div
             key={i}
             className="absolute flex items-center justify-center"
-            style={{ left: 8, right: 8, top: topPx, height: 6, backgroundColor: '#b45309', borderRadius: 3 }}
+            style={{ left: 8, right: 8, top: topPx, height: 10, backgroundColor: '#b45309', borderRadius: 3 }}
           >
             <span className="text-amber-100 text-[12px] font-black">{stepLabel}</span>
           </div>
@@ -66,7 +66,10 @@ export default function LadderScene({ redScore, blueScore, totalSteps }: Props) 
   const ladderHeight = totalSteps * STEP_HEIGHT;
 
   return (
-    <div className="flex flex-col items-center select-none shrink-0" style={{ width: 400 }}>
+    <div className="flex flex-col items-center select-none shrink-0" style={{
+      width: 400
+
+    }}>
 
       {/* Trophy centered between the ladders */}
       <div className="text-5xl mb-2 animate-float drop-shadow-lg text-center">🏆</div>

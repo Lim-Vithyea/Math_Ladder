@@ -1,19 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { ConfigProvider, App, Button, Typography, Card, Row, Col } from 'antd';
 import MathParticles from './components/MathParticles';
-import { TRANSLATIONS, type Lang } from './i18n/translations';
+import { useSettings } from './context/SettingsContext';
 
 const { Title, Text } = Typography;
 
 export default function LandingPage() {
-  const [lang, setLang] = useState<Lang>('en');
-  const t = TRANSLATIONS[lang];
+  const { lang, setLang, t } = useSettings();
 
   const toggleLang = () => {
-    setLang(prev => (prev === 'en' ? 'km' : 'en'));
+    setLang(lang === 'en' ? 'km' : 'en');
   };
 
   return (

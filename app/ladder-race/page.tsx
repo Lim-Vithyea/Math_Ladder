@@ -22,9 +22,10 @@ import MathParticles from '../components/MathParticles';
 import GameSidebar from '../components/GameSidebar';
 import { generateQuestion, type Question, type Difficulty, type QuestionType } from '../utils/gameUtils';
 import { TRANSLATIONS, type Lang } from '../i18n/translations';
+import { useSettings } from '../context/SettingsContext';
 
 // ── Constants ─────────────────────────────────────────────────────
-const TOTAL_STEPS = 10; // steps to reach the top
+const TOTAL_STEPS = 15; // steps to reach the top
 
 // ── Types ─────────────────────────────────────────────────────────
 type Team = 'red' | 'blue';
@@ -44,18 +45,18 @@ function freshTeam(diff: Difficulty, mode: GameMode, type: QuestionType): TeamSt
 
 // ── Component ─────────────────────────────────────────────────────
 export default function GamePage() {
-  const [difficulty, setDifficulty] = useState<Difficulty>('easy');
-  const [gameMode, setGameMode] = useState<GameMode>('calculator');
-  const [exerciseType, setExerciseType] = useState<QuestionType>('mixed');
+  const {
+    difficulty, setDifficulty,
+    gameMode, setGameMode,
+    exerciseType, setExerciseType,
+    lang, setLang, t
+  } = useSettings();
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const [red, setRed] = useState<TeamState>(() => freshTeam('easy', 'calculator', 'mixed'));
-  const [blue, setBlue] = useState<TeamState>(() => freshTeam('easy', 'calculator', 'mixed'));
+  const [red, setRed] = useState<TeamState>(() => freshTeam(difficulty, gameMode, exerciseType));
+  const [blue, setBlue] = useState<TeamState>(() => freshTeam(difficulty, gameMode, exerciseType));
   const [winner, setWinner] = useState<Team | null>(null);
-
-  // ── Language toggle ────────────────────────────────────────────
-  const [lang, setLang] = useState<Lang>('en');
-  const t = TRANSLATIONS[lang]; // shorthand for current translations
 
   // ── Difficulty Handler ─────────────────────────────────────────
   const handleDifficultyChange = (val: Difficulty) => {
@@ -200,7 +201,7 @@ export default function GamePage() {
           <main className="flex flex-col landscape:flex-row md:flex-row items-center md:items-start justify-center gap-6 md:gap-9 px-2 flex-1 w-full max-w-[1400px] mx-auto">
 
             {/* Central ladder */}
-            <div className="order-1 landscape:order-2 md:order-2 shrink-0 transform scale-75 landscape:scale-[0.6] md:scale-100 lg:scale-[1] origin-top md:origin-center">
+            <div className="order-1 landscape:order-2 md:order-2 shrink-0 transform scale-75 landscape:scale-[0.6] md:scale-100 lg:scale-[1] origin-top">
               <LadderScene
                 redScore={red.score}
                 blueScore={blue.score}
@@ -229,7 +230,7 @@ export default function GamePage() {
             </div>
 
             {/* Blue team */}
-            <div className="order-3 landscape:order-3 md:order-3 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px] flex justify-center">
+            <div className="order-3 landscape:order-3 md:order-3 w-full landscape:w-auto md:w-auto flex-1 max-w-[450px] min-w-[280px] flex justify-center">
               <TeamCalculator
                 team="blue"
                 teamName={t.penguinTeam}

@@ -1,10 +1,11 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Button } from 'antd';
 import type { Translations } from '../i18n/translations';
+import { useSettings } from '../context/SettingsContext';
 
 export default function BackgroundMusic({ t }: { t: Translations }) {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { musicEnabled, setMusicEnabled } = useSettings();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Initialize the audio object only on the client side
@@ -22,15 +23,23 @@ export default function BackgroundMusic({ t }: { t: Translations }) {
     }
   }, []);
 
-  const toggleMusic = () => {
+  // Sync audio state with musicEnabled setting
+  useEffect(() => {
     if (!audioRef.current) return;
 
-    if (isPlaying) {
-      audioRef.current.pause();
+    if (musicEnabled) {
+      audioRef.current.play().catch(e => {
+        console.error("Audio playback failed:", e);
+        // If autoplay is blocked, we might need to reset the setting or handle it
+        setMusicEnabled(false);
+      });
     } else {
-      audioRef.current.play().catch(e => console.error("Audio playback failed:", e));
+      audioRef.current.pause();
     }
-    setIsPlaying(!isPlaying);
+  }, [musicEnabled]);
+
+  const toggleMusic = () => {
+    setMusicEnabled(!musicEnabled);
   };
 
   return (
@@ -40,12 +49,12 @@ export default function BackgroundMusic({ t }: { t: Translations }) {
       style={{
         fontWeight: 800,
         borderRadius: 12,
-        backgroundColor: isPlaying ? '#10b981' : 'white',
-        color: isPlaying ? 'white' : '#6b7280',
-        borderColor: isPlaying ? '#059669' : '#e5e7eb',
+        backgroundColor: musicEnabled ? '#10b981' : 'white',
+        color: musicEnabled ? 'white' : '#6b7280',
+        borderColor: musicEnabled ? '#059669' : '#e5e7eb',
       }}
     >
-      {isPlaying ? t.musicOn : t.musicOff}
+      {musicEnabled ? t.musicOn : t.musicOff}
     </Button>
   );
 }
