@@ -36,7 +36,7 @@ export interface Translations {
 }
 
 const en: Translations = {
-  title: '🧮 Math Ladder Race! 🏆',
+  title: 'Math Ladder Race!',
   subtitle: 'Answer the math question correctly to climb up the ladder! First team to the top wins! 🌟',
   hint: '🦊 Red team uses the left calculator  |  🐧 Blue team uses the right calculator',
 

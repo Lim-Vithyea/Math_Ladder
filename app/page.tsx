@@ -89,7 +89,9 @@ export default function GamePage() {
           feedback: 'correct',
         };
       } else {
-        return { ...s, input: '', feedback: 'wrong' };
+        // Decrease score by 1 if wrong, but don't go below 0
+        const newScore = Math.max(0, s.score - 1);
+        return { ...s, score: newScore, input: '', feedback: 'wrong' };
       }
     });
 
