@@ -67,7 +67,7 @@ export default function TeamCalculator({
         'bg-white';
 
   return (
-    <div className={`w-128 rounded-3xl overflow-hidden shadow-2xl border-4 ${theme.border}`}>
+    <div className={`w-full rounded-3xl overflow-hidden shadow-2xl border-4 ${theme.border}`}>
 
       {/* ── Team Header ──────────────────────────────────────── */}
       <div className={`bg-gradient-to-br ${theme.header} p-4 text-center`}>

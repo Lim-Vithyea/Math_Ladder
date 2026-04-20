@@ -154,48 +154,54 @@ export default function GamePage() {
             <p className="text-gray-400 text-sm mt-1 font-semibold">{t.hint}</p>
           </header>
 
-          <main className="flex items-start justify-center gap-4 lg:gap-32 px-4 pb-10 flex-1 flex-wrap">
+          <main className="flex flex-col xl:flex-row items-center xl:items-start justify-center gap-8 xl:gap-16 px-4 pb-10 flex-1 w-full max-w-7xl mx-auto">
 
-            {/* Red team */}
-            <TeamCalculator
-              team="red"
-              teamName={t.foxTeam}
-              emoji="🦊"
-              score={red.score}
-              totalSteps={TOTAL_STEPS}
-              question={red.question}
-              input={red.input}
-              feedback={red.feedback}
-              disabled={!!winner}
-              t={t}
-              onDigit={(d) => handleDigit('red', d)}
-              onBackspace={() => handleBackspace('red')}
-              onSubmit={() => handleSubmit('red')}
-            />
+            {/* Central ladder (Mobile: Top, Desktop: Middle) */}
+            <div className="order-1 xl:order-2 shrink-0 transform scale-90 sm:scale-100 origin-top">
+              <LadderScene
+                redScore={red.score}
+                blueScore={blue.score}
+                totalSteps={TOTAL_STEPS}
+              />
+            </div>
 
-            {/* Central ladder */}
-            <LadderScene
-              redScore={red.score}
-              blueScore={blue.score}
-              totalSteps={TOTAL_STEPS}
-            />
+            {/* Red team (Mobile: Middle, Desktop: Left) */}
+            <div className="order-2 xl:order-1 w-full max-w-[500px]">
+              <TeamCalculator
+                team="red"
+                teamName={t.foxTeam}
+                emoji="🦊"
+                score={red.score}
+                totalSteps={TOTAL_STEPS}
+                question={red.question}
+                input={red.input}
+                feedback={red.feedback}
+                disabled={!!winner}
+                t={t}
+                onDigit={(d) => handleDigit('red', d)}
+                onBackspace={() => handleBackspace('red')}
+                onSubmit={() => handleSubmit('red')}
+              />
+            </div>
 
-            {/* Blue team */}
-            <TeamCalculator
-              team="blue"
-              teamName={t.penguinTeam}
-              emoji="🐧"
-              score={blue.score}
-              totalSteps={TOTAL_STEPS}
-              question={blue.question}
-              input={blue.input}
-              feedback={blue.feedback}
-              disabled={!!winner}
-              t={t}
-              onDigit={(d) => handleDigit('blue', d)}
-              onBackspace={() => handleBackspace('blue')}
-              onSubmit={() => handleSubmit('blue')}
-            />
+            {/* Blue team (Mobile: Bottom, Desktop: Right) */}
+            <div className="order-3 xl:order-3 w-full max-w-[500px]">
+              <TeamCalculator
+                team="blue"
+                teamName={t.penguinTeam}
+                emoji="🐧"
+                score={blue.score}
+                totalSteps={TOTAL_STEPS}
+                question={blue.question}
+                input={blue.input}
+                feedback={blue.feedback}
+                disabled={!!winner}
+                t={t}
+                onDigit={(d) => handleDigit('blue', d)}
+                onBackspace={() => handleBackspace('blue')}
+                onSubmit={() => handleSubmit('blue')}
+              />
+            </div>
 
           </main>
         </div>
