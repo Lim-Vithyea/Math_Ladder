@@ -13,7 +13,7 @@ export default function BackgroundMusic({ t }: { t: Translations }) {
     // So we just use '/filename.mp3' instead of the local hard drive path.
     audioRef.current = new Audio('/bg-music.mp3');
     audioRef.current.loop = true; // Make it loop forever!
-    audioRef.current.volume = 1; // Keep the volume low so it's not annoying
+    audioRef.current.volume = 0.5; // Keep the volume low so it's not annoying
 
     return () => {
       if (audioRef.current) {
@@ -36,7 +36,7 @@ export default function BackgroundMusic({ t }: { t: Translations }) {
   return (
     <Button
       onClick={toggleMusic}
-      className="absolute z-50 shadow-md border-2"
+      className="shadow-md border-2"
       style={{
         fontWeight: 800,
         borderRadius: 12,

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Nunito, Battambang } from "next/font/google";
+import { Nunito, Kantumruy_Pro } from "next/font/google";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -8,11 +8,11 @@ const nunito = Nunito({
   variable: "--font-nunito",
 });
 
-// Battambang covers Khmer script; it gracefully falls back to Nunito for Latin
-const battambang = Battambang({
+// Kantumruy Pro covers Khmer script; it gracefully falls back to Nunito for Latin
+const kantumruy = Kantumruy_Pro({
   subsets: ["khmer", "latin"],
   weight: ["400", "700"],
-  variable: "--font-battambang",
+  variable: "--font-kantumruy",
 });
 
 export const metadata: Metadata = {
@@ -24,13 +24,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       {/*
-        Font stack: Battambang first (handles Khmer glyphs),
+        Font stack: Kantumruy Pro first (handles Khmer glyphs),
         then Nunito (handles Latin / numbers), then system fallback.
       */}
       <body
-        className={`${battambang.variable} ${nunito.variable}`}
+        className={`${kantumruy.variable} ${nunito.variable}`}
         style={{
-          fontFamily: "var(--font-battambang), var(--font-nunito), sans-serif",
+          fontFamily: "var(--font-kantumruy), var(--font-nunito), sans-serif",
           margin: 0,
         }}
       >

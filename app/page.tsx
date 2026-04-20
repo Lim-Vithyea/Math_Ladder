@@ -13,14 +13,14 @@
  */
 
 import React, { useState, useCallback } from 'react';
-import { ConfigProvider, App, Button } from 'antd';
+import { ConfigProvider, App, Button, Dropdown } from 'antd';
 
 import TeamCalculator from './components/TeamCalculator';
 import LadderScene from './components/LadderScene';
 import WinnerModal from './components/WinnerModal';
 import MathParticles from './components/MathParticles';
 import BackgroundMusic from './components/BackgroundMusic';
-import { generateQuestion, type Question } from './utils/gameUtils';
+import { generateQuestion, type Question, type Difficulty } from './utils/gameUtils';
 import { TRANSLATIONS, type Lang } from './i18n/translations';
 
 // ── Constants ─────────────────────────────────────────────────────
@@ -37,19 +37,29 @@ interface TeamState {
 }
 
 // ── Helpers ───────────────────────────────────────────────────────
-function freshTeam(): TeamState {
-  return { score: 0, question: generateQuestion(), input: '', feedback: null };
+function freshTeam(diff: Difficulty): TeamState {
+  return { score: 0, question: generateQuestion(diff), input: '', feedback: null };
 }
 
 // ── Component ─────────────────────────────────────────────────────
 export default function GamePage() {
-  const [red, setRed] = useState<TeamState>(freshTeam);
-  const [blue, setBlue] = useState<TeamState>(freshTeam);
+  const [difficulty, setDifficulty] = useState<Difficulty>('easy');
+
+  const [red, setRed] = useState<TeamState>(() => freshTeam('easy'));
+  const [blue, setBlue] = useState<TeamState>(() => freshTeam('easy'));
   const [winner, setWinner] = useState<Team | null>(null);
 
   // ── Language toggle ────────────────────────────────────────────
   const [lang, setLang] = useState<Lang>('en');
   const t = TRANSLATIONS[lang]; // shorthand for current translations
+
+  // ── Difficulty Handler ─────────────────────────────────────────
+  const handleDifficultyChange = (val: Difficulty) => {
+    setDifficulty(val);
+    setRed(freshTeam(val));
+    setBlue(freshTeam(val));
+    setWinner(null);
+  };
 
   // Shorthand: pick the right setter
   const setter = (team: Team) => team === 'red' ? setRed : setBlue;
@@ -84,7 +94,7 @@ export default function GamePage() {
         return {
           ...s,
           score: newScore,
-          question: won ? s.question : generateQuestion(),
+          question: won ? s.question : generateQuestion(difficulty),
           input: '',
           feedback: 'correct',
         };
@@ -103,10 +113,10 @@ export default function GamePage() {
 
   // ── Reset game ─────────────────────────────────────────────────
   const handleReset = useCallback(() => {
-    setRed(freshTeam());
-    setBlue(freshTeam());
+    setRed(freshTeam(difficulty));
+    setBlue(freshTeam(difficulty));
     setWinner(null);
-  }, []);
+  }, [difficulty]);
 
   // ── Render ─────────────────────────────────────────────────────
   return (
@@ -118,35 +128,60 @@ export default function GamePage() {
           style={{ zIndex: 1 }}
         >
           <header className="text-center py-8 px-4 relative">
-            <div className=" absolute top-4 right-4 flex gap-2">
-              <Button
-                onClick={() => setLang('en')}
-                style={{
-                  fontWeight: 800,
-                  borderRadius: 12,
-                  borderWidth: 2,
-                  backgroundColor: lang === 'en' ? '#3b82f6' : 'white',
-                  borderColor: lang === 'en' ? '#3b82f6' : '#93c5fd',
-                  color: lang === 'en' ? 'white' : '#3b82f6',
-                  minWidth: 56,
+            <div className="absolute top-4 right-4 flex gap-2 z-50">
+              {/* Language Dropdown */}
+              <Dropdown
+                menu={{
+                  items: [
+                    { key: 'en', label: '🇬🇧 Eng' },
+                    { key: 'km', label: '🇰🇭 ខ្មែរ' },
+                  ],
+                  onClick: (e) => setLang(e.key as Lang)
                 }}
+                trigger={['click']}
               >
-                EN
-              </Button>
-              <Button
-                onClick={() => setLang('km')}
-                style={{
-                  fontWeight: 800,
-                  borderRadius: 12,
-                  borderWidth: 2,
-                  backgroundColor: lang === 'km' ? '#7c3aed' : 'white',
-                  borderColor: lang === 'km' ? '#7c3aed' : '#c4b5fd',
-                  color: lang === 'km' ? 'white' : '#7c3aed',
-                  minWidth: 56,
+                <Button
+                  className="shadow-md transition-transform hover:scale-105 active:scale-95"
+                  style={{
+                    fontWeight: 800,
+                    borderRadius: 12,
+                    borderWidth: 2,
+                    backgroundColor: lang === 'en' ? '#e0f2fe' : '#f3e8ff',
+                    borderColor: lang === 'en' ? '#38bdf8' : '#c084fc',
+                    color: lang === 'en' ? '#0284c7' : '#7e22ce',
+                  }}
+                >
+                  {lang === 'en' ? '🇬🇧 Eng' : '🇰🇭 ខ្មែរ'} ⬇️
+                </Button>
+              </Dropdown>
+
+              {/* Difficulty Dropdown */}
+              <Dropdown
+                menu={{
+                  items: [
+                    { key: 'easy', label: t.diffEasy },
+                    { key: 'medium', label: t.diffMedium },
+                    { key: 'hard', label: t.diffHard },
+                  ],
+                  onClick: (e) => handleDifficultyChange(e.key as Difficulty)
                 }}
+                trigger={['click']}
               >
-                ខ្មែរ
-              </Button>
+                <Button
+                  className="shadow-md transition-transform hover:scale-105 active:scale-95"
+                  style={{
+                    fontWeight: 800,
+                    borderRadius: 12,
+                    borderWidth: 2,
+                    backgroundColor: '#fef3c7',
+                    borderColor: '#fbbf24',
+                    color: '#d97706',
+                  }}
+                >
+                  {difficulty === 'easy' ? t.diffEasy : difficulty === 'medium' ? t.diffMedium : t.diffHard} ⚙️
+                </Button>
+              </Dropdown>
+
               <BackgroundMusic t={t} />
             </div>
 

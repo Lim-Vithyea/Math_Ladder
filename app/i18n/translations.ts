@@ -29,6 +29,11 @@ export interface Translations {
   musicOn: string;
   musicOff: string;
 
+  // ── Difficulty Settings ─────────────────────────
+  diffEasy: string;
+  diffMedium: string;
+  diffHard: string;
+
   // ── Winner modal ────────────────────────────────
   wins: string;               // appended after team name, e.g. "Fox Team Wins!"
   winnerSub: string;
@@ -48,19 +53,22 @@ const en: Translations = {
   placeholder: '_ _ _',
   feedbackCorrect: '✅ Correct! +1 Step!',
   feedbackWrong: '❌ Wrong! Try again!',
-  btnBack: '⌫ Back',
+  btnBack: '⌫ Delete',
   btnGo: '✓ Go!',
 
   musicOn: '🔊 Music On',
   musicOff: '🔇 Music Off',
 
+  diffEasy: 'Easy',
+  diffMedium: 'Medium',
+  diffHard: 'Hard',
   wins: 'Wins!',
   winnerSub: 'Amazing math skills! You climbed all the way up! 🎉',
   playAgain: '🔄 Play Again!',
 };
 
 const km: Translations = {
-  title: '🧮 ការប្រណាំងជណ្តើរគណិតវិទ្យា! 🏆',
+  title: 'ការប្រណាំងជណ្តើរគណិតវិទ្យា',
   subtitle: 'ឆ្លើយសំណួរឱ្យបានត្រឹមត្រូវ ដើម្បីឡើងជណ្តើរ! ក្រុមណាឡើងដល់កំពូលដំបូង ក្រុមនោះឈ្នះ! 🌟',
   hint: '🦊 ក្រុមក្រហមប្រើម៉ាស៊ីនគណនាខាងឆ្វេង  |  🐧 ក្រុមខៀវប្រើម៉ាស៊ីនគណនាខាងស្ដាំ',
 
@@ -72,11 +80,15 @@ const km: Translations = {
   placeholder: '_ _ _',
   feedbackCorrect: '✅ ត្រឹមត្រូវ! +1 ជំហាន!',
   feedbackWrong: '❌ ខុស! ព្យាយាមម្ដងទៀត!',
-  btnBack: '⌫ ថយ',
+  btnBack: '⌫ លុប',
   btnGo: '✓ ទៅ!',
 
   musicOn: '🔊 បើកសំឡេង',
   musicOff: '🔇 បិទសំឡេង',
+
+  diffEasy: ' ងាយស្រួល',
+  diffMedium: ' មធ្យម',
+  diffHard: ' ពិបាក',
 
   wins: 'ឈ្នះ!',
   winnerSub: 'ជំនាញគណិតវិទ្យាល្អណាស់! អ្នកឡើងដល់កំពូលហើយ! 🎉',
