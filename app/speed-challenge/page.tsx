@@ -33,11 +33,11 @@ function freshTeam(diff: Difficulty, mode: GameMode, type: QuestionType): TeamSt
 }
 
 export default function SpeedChallengePage() {
-  const { 
-    difficulty, setDifficulty, 
-    gameMode, setGameMode, 
-    exerciseType, setExerciseType, 
-    lang, setLang, t 
+  const {
+    difficulty, setDifficulty,
+    gameMode, setGameMode,
+    exerciseType, setExerciseType,
+    lang, setLang, t
   } = useSettings();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -156,16 +156,16 @@ export default function SpeedChallengePage() {
   }, [isGameActive, difficulty, gameMode, exerciseType]);
 
   return (
-    <ConfigProvider theme={{ 
+    <ConfigProvider theme={{
       algorithm: theme.darkAlgorithm,
-      token: { 
+      token: {
         fontFamily: 'var(--font-kantumruy), var(--font-nunito), sans-serif',
         borderRadius: 24,
-      } 
+      }
     }}>
       <App style={{ backgroundColor: 'transparent' }}>
-        <div 
-          className="relative min-h-screen w-full overflow-hidden bg-[#020617] text-white"
+        <div
+          className="relative h-[calc(100vh)] w-full overflow-hidden bg-[#020617] text-white"
           style={{ fontFamily: 'var(--font-kantumruy), var(--font-nunito), sans-serif' }}
         >
           {/* Animated Background Mesh */}

@@ -7,15 +7,15 @@ import TugOfWarGame from '../components/TugOfWarGame';
 
 export default function TugOfWarPage() {
   return (
-    <ConfigProvider theme={{ 
+    <ConfigProvider theme={{
       algorithm: theme.darkAlgorithm,
-      token: { 
+      token: {
         fontFamily: 'var(--font-kantumruy), var(--font-nunito), sans-serif',
         borderRadius: 24,
-      } 
+      }
     }}>
       <App style={{ backgroundColor: 'transparent' }}>
-        <div 
+        <div
           className="relative min-h-screen w-full overflow-hidden bg-[#020617] text-white"
           style={{ fontFamily: 'var(--font-kantumruy), var(--font-nunito), sans-serif' }}
         >
