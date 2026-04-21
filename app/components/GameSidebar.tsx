@@ -89,6 +89,21 @@ export default function GameSidebar({
                 ⏱️ {t.speedGame}
               </Button>
             </Link>
+            <Link href="/tug-of-war" style={{ width: '100%' }}>
+              <Button 
+                block 
+                style={{ 
+                  textAlign: 'left', 
+                  height: 40, 
+                  borderRadius: 8,
+                  borderColor: '#10b981',
+                  color: '#059669',
+                  fontWeight: 600
+                }}
+              >
+                🪢 {t.tugGame}
+              </Button>
+            </Link>
           </Space>
         </section>
 

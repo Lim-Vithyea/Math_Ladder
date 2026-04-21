@@ -41,11 +41,11 @@ export default function LandingPage() {
             </Text>
           </header>
 
-          <main className="w-full max-w-5xl">
+          <main className="w-full max-w-6xl">
             <Row gutter={[32, 32]} justify="center">
 
               {/* Ladder Race Card */}
-              <Col xs={24} md={12}>
+              <Col xs={24} md={8}>
                 <Link href="/ladder-race">
                   <Card
                     hoverable
@@ -56,16 +56,16 @@ export default function LandingPage() {
                       <div className="text-7xl mb-6 transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
                         🪜
                       </div>
-                      <Title level={2} className="text-3xl font-black text-violet-700 mb-4">
+                      <Title level={2} className="text-2xl font-black text-violet-700 mb-4">
                         {t.ladderGame}
                       </Title>
-                      <Text className="text-lg text-gray-500 font-semibold mb-8 h-12">
+                      <Text className="text-base text-gray-500 font-semibold mb-8 h-16 block">
                         {t.ladderDesc}
                       </Text>
                       <Button
                         type="primary"
                         size="large"
-                        className="h-14 px-10 rounded-2xl text-xl font-black bg-violet-600 border-none shadow-lg group-hover:bg-violet-700 transition-colors"
+                        className="h-12 px-8 rounded-2xl text-lg font-black bg-violet-600 border-none shadow-lg group-hover:bg-violet-700 transition-colors"
                       >
                         {t.start}
                       </Button>
@@ -75,7 +75,7 @@ export default function LandingPage() {
               </Col>
 
               {/* Speed Challenge Card */}
-              <Col xs={24} md={12}>
+              <Col xs={24} md={8}>
                 <Link href="/speed-challenge">
                   <Card
                     hoverable
@@ -86,16 +86,46 @@ export default function LandingPage() {
                       <div className="text-7xl mb-6 transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-300">
                         ⏱️
                       </div>
-                      <Title level={2} className="text-3xl font-black text-orange-600 mb-4">
+                      <Title level={2} className="text-2xl font-black text-orange-600 mb-4">
                         {t.speedGame}
                       </Title>
-                      <Text className="text-lg text-gray-500 font-semibold mb-8 h-12">
+                      <Text className="text-base text-gray-500 font-semibold mb-8 h-16 block">
                         {t.speedDesc}
                       </Text>
                       <Button
                         type="primary"
                         size="large"
-                        className="h-14 px-10 rounded-2xl text-xl font-black bg-orange-500 border-none shadow-lg group-hover:bg-orange-600 transition-colors"
+                        className="h-12 px-8 rounded-2xl text-lg font-black bg-orange-500 border-none shadow-lg group-hover:bg-orange-600 transition-colors"
+                      >
+                        {t.start}
+                      </Button>
+                    </div>
+                  </Card>
+                </Link>
+              </Col>
+
+              {/* Tug of War Card */}
+              <Col xs={24} md={8}>
+                <Link href="/tug-of-war">
+                  <Card
+                    hoverable
+                    className="h-full rounded-3xl border-4 border-emerald-100 shadow-xl overflow-hidden group transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-emerald-400"
+                    styles={{ body: { padding: '40px 32px' } }}
+                  >
+                    <div className="flex flex-col items-center text-center">
+                      <div className="text-7xl mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                        🪢
+                      </div>
+                      <Title level={2} className="text-2xl font-black text-emerald-600 mb-4">
+                        {t.tugGame}
+                      </Title>
+                      <Text className="text-base text-gray-500 font-semibold mb-8 h-16 block">
+                        {t.tugDesc}
+                      </Text>
+                      <Button
+                        type="primary"
+                        size="large"
+                        className="h-12 px-8 rounded-2xl text-lg font-black bg-emerald-500 border-none shadow-lg group-hover:bg-emerald-600 transition-colors"
                       >
                         {t.start}
                       </Button>
