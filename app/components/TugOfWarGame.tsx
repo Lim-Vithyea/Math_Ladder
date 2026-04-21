@@ -123,7 +123,7 @@ export default function TugOfWarGame() {
   }, [winner, difficulty, gameMode, exerciseType, isGameStarted]);
 
   return (
-    <div className="w-full">
+    <div className="w-full flex-1 flex flex-col">
       <header className="text-center py-8 px-4 relative">
         <div className="absolute top-4 right-4 z-50">
           <Button
@@ -139,10 +139,10 @@ export default function TugOfWarGame() {
 
         {!isGameStarted && (
           <>
-            <h1 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent inline-block select-none py-2 leading-normal">
+            <h1 className="text-4xl lg:text-5xl font-black bg-gradient-to-b from-white to-white/60 bg-clip-text text-transparent inline-block select-none py-2 leading-normal">
               {t.tugGame}
             </h1>
-            <p className="text-gray-600 font-bold max-w-2xl mx-auto">
+            <p className="text-slate-400 font-bold max-w-2xl mx-auto">
               {t.tugSubtitle}
             </p>
           </>
@@ -172,7 +172,7 @@ export default function TugOfWarGame() {
               type="primary"
               size="large"
               onClick={() => setIsGameStarted(true)}
-              className="h-20 px-16 rounded-3xl text-3xl font-black bg-emerald-500 border-none shadow-2xl hover:scale-110 active:scale-95 transition-all animate-bounce"
+              className="h-20 px-16 rounded-3xl text-3xl font-black bg-emerald-600 hover:bg-emerald-500 border-none shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all animate-bounce"
             >
               {t.start}
             </Button>
@@ -180,17 +180,17 @@ export default function TugOfWarGame() {
         )}
 
         {isGameStarted && (
-          <div className='w-full flex justify-center items-center'>
-            <div className="w-full flex justify-center transform md:scale-100 origin-center">
+          <div className='w-full flex justify-center items-center py-4'>
+            <div className="w-full flex justify-center transform md:scale-100 origin-center px-4">
               <TugOfWarScene ropePosition={ropePosition} maxSteps={MAX_STEPS} />
             </div>
           </div>
         )}
       </div>
 
-      <main className="flex items-center justify-center flex-1 w-full max-w-[1400px] mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 w-full">
-          <div className="w-full flex justify-center">
+      <main className="flex items-center justify-center flex-1 w-full max-w-[1400px] mx-auto pb-12">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 w-full px-4">
+          <div className="w-full flex justify-center max-w-[500px]">
             <TeamCalculator
               team="red"
               teamName={t.foxTeam}
@@ -208,7 +208,7 @@ export default function TugOfWarGame() {
               onSubmit={(choice) => handleSubmit('red', choice)}
             />
           </div>
-          <div className="w-full flex justify-center">
+          <div className="w-full flex justify-center max-w-[500px]">
             <TeamCalculator
               team="blue"
               teamName={t.penguinTeam}
