@@ -61,6 +61,8 @@ export interface Translations {
   ladderDesc: string;
   speedGame: string;
   speedDesc: string;
+  tugGame: string;
+  tugDesc: string;
   backToMenu: string;
 
   // ── Speed Challenge ──────────────────────────────
@@ -69,6 +71,10 @@ export interface Translations {
   score: string;
   timesUp: string;
   finalScore: string;
+
+  // ── Tug of War ───────────────────────────────────
+  tugSubtitle: string;
+  tugHint: string;
 }
 
 const en: Translations = {
@@ -114,8 +120,10 @@ const en: Translations = {
   menuSubtitle: 'Pick a game and start practicing your math skills!',
   ladderGame: 'Ladder Race 🪜',
   ladderDesc: 'Race to the top of the ladder! First to 10 points wins!',
-  speedGame: 'Speed Challenge ⏱️',
+  speedGame: 'Speed Challenge',
   speedDesc: 'How many can you solve in 60 seconds? Go for a high score!',
+  tugGame: 'Tug of War 🪢',
+  tugDesc: 'Pull the rope to your side! First team to pull the marker across their line wins!',
   backToMenu: '🏠 Back to Menu',
 
   start: 'Start Game! 🏁',
@@ -123,6 +131,9 @@ const en: Translations = {
   score: 'Score',
   timesUp: "Time's Up! ⌛",
   finalScore: 'Final Score',
+
+  tugSubtitle: 'Answer math questions to pull the rope! Win by pulling the marker to your side! 🪢',
+  tugHint: '🦊 Red team pulls left  |  🐧 Blue team pulls right',
 };
 
 const km: Translations = {
@@ -171,6 +182,8 @@ const km: Translations = {
   ladderDesc: 'ប្រណាំងទៅកាន់កំពូលជណ្តើរ! អ្នកដល់លេខ ១០ មុនគេឈ្នះ!',
   speedGame: 'ការប្រកួតល្បឿន ⏱️',
   speedDesc: 'តើអ្នកអាចដោះស្រាយបានប៉ុន្មានក្នុងរយៈពេល ៦០ វិនាទី? រកពិន្ទុឱ្យបានច្រើន!',
+  tugGame: 'ទាញព្រ័ត្រ 🪢',
+  tugDesc: 'ទាញព្រ័ត្រមកខាងអ្នក! ក្រុមដំបូងដែលទាញសញ្ញាសម្គាល់មកដល់ខ្សែបន្ទាត់របស់ពួកគេគឺឈ្នះ!',
   backToMenu: '🏠 ត្រឡប់ទៅម៉ឺនុយវិញ',
 
   start: 'ចាប់ផ្តើមហ្គេម! 🏁',
@@ -178,6 +191,9 @@ const km: Translations = {
   score: 'ពិន្ទុ',
   timesUp: "អស់ម៉ោងហើយ! ⌛",
   finalScore: 'ពិន្ទុចុងក្រោយ',
+
+  tugSubtitle: 'ឆ្លើយសំណួរគណិតវិទ្យាដើម្បីទាញព្រ័ត្រ! ឈ្នះដោយទាញសញ្ញាសម្គាល់មកខាងអ្នក! 🪢',
+  tugHint: '🦊 ក្រុមក្រហមទាញទៅឆ្វេង  |  🐧 ក្រុមខៀវទាញទៅស្ដាំ',
 };
 
 export const TRANSLATIONS: Record<Lang, Translations> = { en, km };

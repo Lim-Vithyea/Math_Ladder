@@ -13,7 +13,7 @@
  */
 
 import React, { useState, useCallback } from 'react';
-import { ConfigProvider, App, Button } from 'antd';
+import { ConfigProvider, App, Button, theme } from 'antd';
 
 import TeamCalculator from '../components/TeamCalculator';
 import LadderScene from '../components/LadderScene';
@@ -146,122 +146,124 @@ export default function GamePage() {
 
   // ── Render ─────────────────────────────────────────────────────
   return (
-    <ConfigProvider theme={{ token: { fontFamily: 'inherit' } }}>
-      <App>
-        <MathParticles />
+    <ConfigProvider theme={{
+      algorithm: theme.darkAlgorithm,
+      token: {
+        fontFamily: 'var(--font-kantumruy), var(--font-nunito), sans-serif',
+        borderRadius: 24,
+      }
+    }}>
+      <App style={{ backgroundColor: 'transparent' }}>
         <div
-          className="min-h-screen flex flex-col relative bg-transparent"
-          style={{ zIndex: 1 }}
+          className="relative h-[calc(100vh)] w-full overflow-hidden bg-[#020617] text-white"
+          style={{ fontFamily: 'var(--font-kantumruy), var(--font-nunito), sans-serif' }}
         >
-          <header className="text-center py-8 px-4 relative">
-            <div className="absolute top-4 right-4 z-50">
-              <Button
-                type="primary"
-                size="large"
-                icon={<span>⚙️</span>}
-                onClick={() => setIsSidebarOpen(true)}
-                className="shadow-lg transition-transform hover:scale-110 active:scale-95 flex items-center gap-2"
-                style={{
-                  fontWeight: 800,
-                  borderRadius: 16,
-                  height: 50,
-                  backgroundColor: '#7e22ce',
-                  borderColor: '#6b21a8',
-                  borderWidth: 2,
-                }}
-              >
-                {t.settings}
-              </Button>
-            </div>
+          {/* Animated Background Mesh */}
+          <div className="absolute inset-0 z-0">
+            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-violet-600/20 blur-[120px] animate-pulse" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-500/20 blur-[120px] animate-pulse [animation-delay:1s]" />
+            <MathParticles />
+          </div>
 
-            <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent inline-block select-none py-2 leading-normal">
-              {t.title}
-            </h1>
-            <p className="text-gray-600 font-bold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent select-none py-2 leading-normal text-base lg:text-lg">
-              {t.subtitle}
-            </p>
-            {/* <p className="text-gray-400 text-sm mt-1 font-semibold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent select-none py-2 leading-normal">{t.hint}</p> */}
-          </header>
+          <div className="relative z-10 flex flex-col min-h-screen">
+            <header className="text-center py-8 px-4 relative">
+              <div className="absolute top-4 right-4 z-50">
+                <Button
+                  type="primary"
+                  size="large"
+                  icon={<span>⚙️</span>}
+                  onClick={() => setIsSidebarOpen(true)}
+                  className="shadow-lg font-black rounded-2xl h-12 bg-violet-600 border-none flex items-center gap-2 transition-transform hover:scale-110 active:scale-95"
+                >
+                  {t.settings}
+                </Button>
+              </div>
 
-          <GameSidebar
-            open={isSidebarOpen}
-            onClose={() => setIsSidebarOpen(false)}
-            lang={lang}
-            setLang={setLang}
-            difficulty={difficulty}
-            setDifficulty={handleDifficultyChange}
-            gameMode={gameMode}
-            setGameMode={handleModeChange}
-            exerciseType={exerciseType}
-            setExerciseType={handleExerciseTypeChange}
-            onReset={handleReset}
-            t={t}
-          />
+              <h1 className="text-4xl lg:text-5xl font-black bg-gradient-to-b from-white to-white/60 bg-clip-text text-transparent inline-block select-none py-2 leading-normal">
+                {t.ladderGame}
+              </h1>
+              <p className="text-slate-400 font-bold max-w-2xl mx-auto">
+                {t.subtitle}
+              </p>
+            </header>
 
-          <main className="flex flex-col landscape:flex-row md:flex-row items-center md:items-start justify-center gap-6 md:gap-9  w-full w-auto max-h-[600px]">
+            <GameSidebar
+              open={isSidebarOpen}
+              onClose={() => setIsSidebarOpen(false)}
+              lang={lang}
+              setLang={setLang}
+              difficulty={difficulty}
+              setDifficulty={handleDifficultyChange}
+              gameMode={gameMode}
+              setGameMode={handleModeChange}
+              exerciseType={exerciseType}
+              setExerciseType={handleExerciseTypeChange}
+              onReset={handleReset}
+              t={t}
+            />
 
-            {/* Central ladder */}
-            <div className="order-1 landscape:order-2 md:order-2 shrink-0 transform scale-75 landscape:scale-[0.6] md:scale-100 lg:scale-[1] origin-top">
-              <LadderScene
-                redScore={red.score}
-                blueScore={blue.score}
-                totalSteps={TOTAL_STEPS}
-              />
-            </div>
+            <main className="flex flex-col landscape:flex-row md:flex-row items-center md:items-start justify-center gap-6 md:gap-9 w-full flex-1">
+              {/* Central ladder */}
+              <div className="order-1 landscape:order-2 md:order-2 shrink-0 transform scale-75 landscape:scale-[0.6] md:scale-90 lg:scale-100 origin-top">
+                <LadderScene
+                  redScore={red.score}
+                  blueScore={blue.score}
+                  totalSteps={TOTAL_STEPS}
+                />
+              </div>
 
-            {/* Red team */}
-            <div className="order-2 landscape:order-1 md:order-1 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px] flex justify-center">
-              <TeamCalculator
-                team="red"
-                teamName={t.foxTeam}
-                emoji="🦊"
-                score={red.score}
-                totalSteps={TOTAL_STEPS}
-                question={red.question}
-                input={red.input}
-                feedback={red.feedback}
-                disabled={!!winner}
-                gameMode={gameMode}
-                t={t}
-                onDigit={(d) => handleDigit('red', d)}
-                onBackspace={() => handleBackspace('red')}
-                onSubmit={(choice) => handleSubmit('red', choice)}
-              />
-            </div>
+              {/* Red team */}
+              <div className="order-2 landscape:order-1 md:order-1 w-full landscape:w-auto md:w-auto flex-1 max-w-[500px] min-w-[280px] flex justify-center">
+                <TeamCalculator
+                  team="red"
+                  teamName={t.foxTeam}
+                  emoji="🦊"
+                  score={red.score}
+                  totalSteps={TOTAL_STEPS}
+                  question={red.question}
+                  input={red.input}
+                  feedback={red.feedback}
+                  disabled={!!winner}
+                  gameMode={gameMode}
+                  t={t}
+                  onDigit={(d) => handleDigit('red', d)}
+                  onBackspace={() => handleBackspace('red')}
+                  onSubmit={(choice) => handleSubmit('red', choice)}
+                />
+              </div>
 
-            {/* Blue team */}
-            <div className="order-3 landscape:order-3 md:order-3 w-full landscape:w-auto md:w-auto flex-1 max-w-[450px] min-w-[280px] flex justify-center">
-              <TeamCalculator
-                team="blue"
-                teamName={t.penguinTeam}
-                emoji="🐧"
-                score={blue.score}
-                totalSteps={TOTAL_STEPS}
-                question={blue.question}
-                input={blue.input}
-                feedback={blue.feedback}
-                disabled={!!winner}
-                gameMode={gameMode}
-                t={t}
-                onDigit={(d) => handleDigit('blue', d)}
-                onBackspace={() => handleBackspace('blue')}
-                onSubmit={(choice) => handleSubmit('blue', choice)}
-              />
-            </div>
+              {/* Blue team */}
+              <div className="order-3 landscape:order-3 md:order-3 w-full landscape:w-auto md:w-auto flex-1 max-w-[450px] min-w-[280px] flex justify-center">
+                <TeamCalculator
+                  team="blue"
+                  teamName={t.penguinTeam}
+                  emoji="🐧"
+                  score={blue.score}
+                  totalSteps={TOTAL_STEPS}
+                  question={blue.question}
+                  input={blue.input}
+                  feedback={blue.feedback}
+                  disabled={!!winner}
+                  gameMode={gameMode}
+                  t={t}
+                  onDigit={(d) => handleDigit('blue', d)}
+                  onBackspace={() => handleBackspace('blue')}
+                  onSubmit={(choice) => handleSubmit('blue', choice)}
+                />
+              </div>
+            </main>
+          </div>
 
-          </main>
+          {/* Winner overlay */}
+          {winner && (
+            <WinnerModal
+              winner={winner}
+              winnerName={winner === 'red' ? t.foxTeam : t.penguinTeam}
+              t={t}
+              onReset={handleReset}
+            />
+          )}
         </div>
-
-
-        {/* Winner overlay */}
-        {winner && (
-          <WinnerModal
-            winner={winner}
-            winnerName={winner === 'red' ? t.foxTeam : t.penguinTeam}
-            t={t}
-            onReset={handleReset}
-          />
-        )}
       </App>
     </ConfigProvider>
   );
