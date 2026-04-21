@@ -189,7 +189,7 @@ export default function TugOfWarGame() {
       </div>
 
       <main className="flex items-center justify-center flex-1 w-full max-w-[1400px] mx-auto pb-12">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 w-full px-4">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-70 w-full px-4">
           <div className="w-full flex justify-center max-w-[500px]">
             <TeamCalculator
               team="red"
