@@ -120,7 +120,7 @@ const en: Translations = {
   menuSubtitle: 'Pick a game and start practicing your math skills!',
   ladderGame: 'Ladder Race 🪜',
   ladderDesc: 'Race to the top of the ladder! First to 10 points wins!',
-  speedGame: 'Speed Challenge ⏱️',
+  speedGame: 'Speed Challenge',
   speedDesc: 'How many can you solve in 60 seconds? Go for a high score!',
   tugGame: 'Tug of War 🪢',
   tugDesc: 'Pull the rope to your side! First team to pull the marker across their line wins!',
