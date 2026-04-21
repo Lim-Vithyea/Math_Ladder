@@ -160,27 +160,18 @@ export default function GamePage() {
                 size="large"
                 icon={<span>⚙️</span>}
                 onClick={() => setIsSidebarOpen(true)}
-                className="shadow-lg transition-transform hover:scale-110 active:scale-95 flex items-center gap-2"
-                style={{
-                  fontWeight: 800,
-                  borderRadius: 16,
-                  height: 50,
-                  backgroundColor: '#7e22ce',
-                  borderColor: '#6b21a8',
-                  borderWidth: 2,
-                }}
+                className="shadow-lg font-black rounded-2xl h-12 bg-violet-600 border-none flex items-center gap-2 transition-transform hover:scale-110 active:scale-95"
               >
                 {t.settings}
               </Button>
             </div>
 
-            <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent inline-block select-none py-2 leading-normal">
-              {t.title}
+            <h1 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent inline-block select-none py-2 leading-normal">
+              {t.ladderGame}
             </h1>
-            <p className="text-gray-600 font-bold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent select-none py-2 leading-normal text-base lg:text-lg">
+            <p className="text-gray-600 font-bold max-w-2xl mx-auto">
               {t.subtitle}
             </p>
-            {/* <p className="text-gray-400 text-sm mt-1 font-semibold bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent select-none py-2 leading-normal">{t.hint}</p> */}
           </header>
 
           <GameSidebar

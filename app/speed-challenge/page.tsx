@@ -168,15 +168,15 @@ export default function SpeedChallengePage() {
                 size="large"
                 icon={<span>⚙️</span>}
                 onClick={() => setIsSidebarOpen(true)}
-                className="shadow-lg font-black rounded-2xl h-12 bg-violet-600 border-none flex items-center gap-2"
+                className="shadow-lg font-black rounded-2xl h-12 bg-violet-600 border-none flex items-center gap-2 transition-transform hover:scale-110 active:scale-95"
               >
                 {t.settings}
               </Button>
             </div>
 
-            <Title className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent inline-block mb-2">
+            <h1 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent inline-block select-none py-2 leading-normal">
               {t.speedGame}
-            </Title>
+            </h1>
             <p className="text-gray-500 font-bold max-w-2xl mx-auto">
               {t.speedDesc}
             </p>
@@ -193,10 +193,6 @@ export default function SpeedChallengePage() {
                 </div>
               </div>
             )}
-
-
-
-
           </header>
 
           <GameSidebar

@@ -36,6 +36,7 @@ export default function TugOfWarGame() {
   } = useSettings();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isGameStarted, setIsGameStarted] = useState(false);
 
   const [red, setRed] = useState<TeamState>(() => freshTeam(difficulty, gameMode, exerciseType));
   const [blue, setBlue] = useState<TeamState>(() => freshTeam(difficulty, gameMode, exerciseType));
@@ -62,6 +63,7 @@ export default function TugOfWarGame() {
     setBlue(freshTeam(diff, mode, type));
     setRopePosition(0);
     setWinner(null);
+    setIsGameStarted(false);
   };
 
   const handleReset = useCallback(() => {
@@ -71,20 +73,20 @@ export default function TugOfWarGame() {
   const setter = (team: Team) => team === 'red' ? setRed : setBlue;
 
   const handleDigit = useCallback((team: Team, digit: string) => {
-    if (winner) return;
+    if (winner || !isGameStarted) return;
     setter(team)(s => ({
       ...s,
       input: s.input.length < 3 ? s.input + digit : s.input,
     }));
-  }, [winner]);
+  }, [winner, isGameStarted]);
 
   const handleBackspace = useCallback((team: Team) => {
-    if (winner) return;
+    if (winner || !isGameStarted) return;
     setter(team)(s => ({ ...s, input: s.input.slice(0, -1) }));
-  }, [winner]);
+  }, [winner, isGameStarted]);
 
   const handleSubmit = useCallback((team: Team, choice?: number) => {
-    if (winner) return;
+    if (winner || !isGameStarted) return;
 
     setter(team)(s => {
       const userAnswer = choice !== undefined ? choice : parseInt(s.input, 10);
@@ -118,28 +120,35 @@ export default function TugOfWarGame() {
     setTimeout(() => {
       setter(team)(s => ({ ...s, feedback: null }));
     }, 700);
-  }, [winner, difficulty, gameMode, exerciseType]);
+  }, [winner, difficulty, gameMode, exerciseType, isGameStarted]);
 
   return (
     <div className="w-full">
-      <header className="text-center py-4 relative">
-        <div className="absolute top-0 right-0">
+      <header className="text-center py-8 px-4 relative">
+        <div className="absolute top-4 right-4 z-50">
           <Button
             type="primary"
+            size="large"
             icon={<span>⚙️</span>}
             onClick={() => setIsSidebarOpen(true)}
-            className="shadow-lg font-black rounded-2xl bg-violet-600 border-none flex items-center gap-2"
+            className="shadow-lg font-black rounded-2xl h-12 bg-violet-600 border-none flex items-center gap-2 transition-transform hover:scale-110 active:scale-95"
           >
             {t.settings}
           </Button>
         </div>
 
-        <Title className="text-4xl font-black bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent inline-block mb-1">
-          {t.tugGame}
-        </Title>
-        <p className="text-gray-500 font-bold mb-1">{t.tugSubtitle}</p>
-        <p className="text-gray-400 text-sm font-semibold">{t.tugHint}</p>
+        {!isGameStarted && (
+          <>
+            <h1 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-violet-600 to-cyan-400 bg-clip-text text-transparent inline-block select-none py-2 leading-normal">
+              {t.tugGame}
+            </h1>
+            <p className="text-gray-600 font-bold max-w-2xl mx-auto">
+              {t.tugSubtitle}
+            </p>
+          </>
+        )}
       </header>
+
 
       <GameSidebar
         open={isSidebarOpen}
@@ -155,12 +164,31 @@ export default function TugOfWarGame() {
         onReset={handleReset}
         t={t}
       />
-      <div className=' flex justify-center items-center'>
-        <div className="w-full flex justify-center transform md:scale-100 origin-center">
-          <TugOfWarScene ropePosition={ropePosition} maxSteps={MAX_STEPS} />
-        </div>
+
+      <div className="flex flex-col items-center">
+        {!isGameStarted && !winner && (
+          <div className="py-2">
+            <Button
+              type="primary"
+              size="large"
+              onClick={() => setIsGameStarted(true)}
+              className="h-20 px-16 rounded-3xl text-3xl font-black bg-emerald-500 border-none shadow-2xl hover:scale-110 active:scale-95 transition-all animate-bounce"
+            >
+              {t.start}
+            </Button>
+          </div>
+        )}
+
+        {isGameStarted && (
+          <div className='w-full flex justify-center items-center'>
+            <div className="w-full flex justify-center transform md:scale-100 origin-center">
+              <TugOfWarScene ropePosition={ropePosition} maxSteps={MAX_STEPS} />
+            </div>
+          </div>
+        )}
       </div>
-      <main className="flex items-center justify-center px-2 flex-1 w-full max-w-[1600px] mx-auto">
+
+      <main className="flex items-center justify-center flex-1 w-full max-w-[1400px] mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 w-full">
           <div className="w-full flex justify-center">
             <TeamCalculator
@@ -172,7 +200,7 @@ export default function TugOfWarGame() {
               question={red.question}
               input={red.input}
               feedback={red.feedback}
-              disabled={!!winner}
+              disabled={!!winner || !isGameStarted}
               gameMode={gameMode}
               t={t}
               onDigit={(d) => handleDigit('red', d)}
@@ -190,7 +218,7 @@ export default function TugOfWarGame() {
               question={blue.question}
               input={blue.input}
               feedback={blue.feedback}
-              disabled={!!winner}
+              disabled={!!winner || !isGameStarted}
               gameMode={gameMode}
               t={t}
               onDigit={(d) => handleDigit('blue', d)}

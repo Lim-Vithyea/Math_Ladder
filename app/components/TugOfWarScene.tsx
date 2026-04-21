@@ -19,13 +19,7 @@ export default function TugOfWarScene({ ropePosition, maxSteps }: Props) {
       {/* <div className="text-5xl mb-8 animate-float drop-shadow-lg text-center">🏆</div> */}
 
       {/* The Tug of War Arena */}
-      <div className="relative w-full h-48 bg-emerald-50 rounded-3xl border-4 border-emerald-100 shadow-inner overflow-hidden">
-        {/* Grass markers */}
-        <div className="absolute inset-0 opacity-20" style={{
-          backgroundImage: 'radial-gradient(#10b981 2px, transparent 2px)',
-          backgroundSize: '30px 30px'
-        }} />
-
+      <div className="relative w-full h-20 bg-emerald-50 rounded-3xl border-4 border-emerald-100 shadow-inner overflow-hidden">
         {/* Win Lines */}
         <div className="absolute left-[10%] top-0 bottom-0 w-1 bg-red-400 border-l-2 border-red-500 border-dashed" />
         <div className="absolute right-[10%] top-0 bottom-0 w-1 bg-blue-400 border-r-2 border-blue-500 border-dashed" />
@@ -35,7 +29,7 @@ export default function TugOfWarScene({ ropePosition, maxSteps }: Props) {
 
         {/* The Rope */}
         <div
-          className="absolute top-1/2 left-0 right-0 h-4 bg-amber-700 shadow-lg transform -translate-y-1/2 transition-all duration-500 ease-out"
+          className="absolute bottom-1 left-0 right-0 h-2 bg-amber-700 shadow-lg transform -translate-y-1/2 transition-all duration-500 ease-out"
           style={{
             backgroundImage: 'repeating-linear-gradient(45deg, #b45309, #b45309 10px, #92400e 10px, #92400e 20px)',
             left: `${positionPercent - 50}%`,
@@ -50,10 +44,10 @@ export default function TugOfWarScene({ ropePosition, maxSteps }: Props) {
 
         {/* Characters */}
         <div
-          className="absolute top-1/2 transition-all duration-500 ease-out text-6xl flex items-center justify-center"
+          className="absolute transition-all duration-500 ease-out text-4xl flex items-center justify-center"
           style={{
             left: `calc(${positionPercent}% - 120px)`,
-            top: '40%',
+            top: '50%',
             transform: 'translateY(-50%)',
             filter: 'drop-shadow(0 8px 10px rgba(220, 38, 38, 0.4))'
           }}
@@ -65,10 +59,10 @@ export default function TugOfWarScene({ ropePosition, maxSteps }: Props) {
         </div>
 
         <div
-          className="absolute top-1/2 transition-all duration-500 ease-out text-6xl flex items-center justify-center"
+          className="absolute top-1/2 transition-all duration-500 ease-out text-4xl flex items-center justify-center"
           style={{
             left: `calc(${positionPercent}% + 40px)`,
-            top: '40%',
+            top: '50%',
             transform: 'translateY(-50%)',
             filter: 'drop-shadow(0 8px 10px rgba(37, 99, 235, 0.4))'
           }}
@@ -79,12 +73,8 @@ export default function TugOfWarScene({ ropePosition, maxSteps }: Props) {
           </div>
         </div>
       </div>
-
-      {/* Ground strip */}
-      <div className="w-full h-8 bg-emerald-600 rounded-b-2xl shadow-inner mt-0 border-t-4 border-emerald-700" />
-
       {/* Status Label */}
-      <div className="flex justify-between mt-4 font-black text-lg w-full px-8">
+      <div className="flex justify-between mt-2 font-black text-lg w-full px-8">
         <div className={`transition-all duration-300 ${ropePosition < 0 ? 'scale-110 text-red-600' : 'text-red-400 opacity-50'}`}>
           🦊 {Math.abs(Math.min(0, ropePosition))} / {maxSteps}
         </div>
